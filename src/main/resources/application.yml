@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+property:
+  api:
+    end-point: /api
+
+#database
+spring:
+  datasource:
+    url: jdbc:mysql://132.145.88.154:3306/planE?characterEncoding=utf8
+    username: planeapp
+    password: New1234!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+# mybatis
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
