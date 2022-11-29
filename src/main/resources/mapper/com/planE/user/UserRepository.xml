@@ -4,7 +4,7 @@
 <mapper namespace="com.planE.user.repository.UserRepository">
 
     <select id="getUserList" resultType="com.planE.user.dto.UserDto">
-        select user_id as userId from user;
+        select * from user;
     </select>
 
 </mapper>

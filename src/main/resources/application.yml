@@ -7,6 +7,11 @@ property:
 
 #database
 spring:
+  output:
+    ansi:
+      enabled: always
+  banner:
+    location: classpath:config/banner.txt
   datasource:
     url: jdbc:mysql://132.145.88.154:3306/planE?characterEncoding=utf8
     username: planeapp
