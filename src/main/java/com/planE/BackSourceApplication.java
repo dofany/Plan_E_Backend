@@ -1,4 +1,4 @@
-package com.planE.back_source;
+package com.planE;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
