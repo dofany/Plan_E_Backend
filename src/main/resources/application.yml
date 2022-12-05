@@ -5,7 +5,6 @@ property:
   api:
     end-point: /api
 
-#database
 spring:
   output:
     ansi:
@@ -17,6 +16,13 @@ spring:
     username: planeapp
     password: New1234!
     driver-class-name: com.mysql.cj.jdbc.Driver
+  mail:
+    username: ENC(csROf5c32ROUdJpsMe1i73NvA7wV7lTpmtfYwDImCrTexmZBZi06j4OQLePPI7kW)
+    password: ENC(+0qbHK9dC10/wJnTUCvl9geLVRmkKtGfiHIjAvinrahX5OT/9M9RsA==)
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
 
 # mybatis
 mybatis:
