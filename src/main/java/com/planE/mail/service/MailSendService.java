@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -25,12 +26,19 @@ public class MailSendService {
         ArrayList<String> toUserList = new ArrayList<>();
         ArrayList<String> toCcList = new ArrayList<>();
 
+        if(mailInputDto.getToUserList() == null) {
+            return "N";
+        }
+
         mailInputDto.getToUserList().forEach(user -> {
             toUserList.add(user);
         });
-        mailInputDto.getCcEmailAdr().forEach(cc -> {
-            toCcList.add(cc);
-        });
+
+        if(mailInputDto.getCcEmailAdr() != null) {
+            mailInputDto.getCcEmailAdr().forEach(cc -> {
+                toCcList.add(cc);
+            });
+        }
 //        toUserList.add("sybaek7980@gmail.com");
 
         int toUserListSize = toUserList.size();
@@ -48,11 +56,14 @@ public class MailSendService {
         try {
             log.info("-- simpleMailMessage :: {}", simpleMailMessage);
             javaMailSender.send(simpleMailMessage);
-            str = "success";
+            // 성공시 메세지
+            str = "Y";
 
             return str;
         } catch (Exception e) {
-            str = e.getMessage();
+            log.info(e.getMessage());
+            str = "N";
+            // 실패시 메세지
             return str;
         }
         finally {

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Api("공통")
+@Api("사용자")
 @RestController
 @RequestMapping("${property.api.end-point}")
 @Slf4j
@@ -21,7 +21,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @ApiOperation("Rest 호출 테스트")
+    @ApiOperation("사용자목록조회")
     @GetMapping("/user/getUserList")
     public List<UserDto> getUserList() {
         log.info("--- com.planE.user.controller.UserController.getUserList() start ---");
@@ -29,5 +29,6 @@ public class UserController {
         log.info("--- com.planE.user.controller.UserController.getUserList() end ---");
         return userList;
     }
+
 
 }
