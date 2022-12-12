@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.planE.mail.repository.EmailAuthnRepository">
+
+    <insert id="insertEmailAuthn" parameterType="com.planE.mail.dto.EmailAuthnDTO">
+		INSERT INTO EMAIL_AUTHN(
+			EMAIL_AUTHN_ID
+			,SYS_CREAT_ID
+			,SYS_AMDR_ID
+			,SYS_SVC_ID
+			,SYS_RECD_CRET_DT
+			,SYS_RECD_CHG_DT
+			,EMAIL
+			,EMAIL_AUTHN_NUM
+			,EMAIL_AUTHN_YN
+		) VALUES (
+			LPAD(GET_SEQ('SEQ_EMAIL_AUTHN_ID'),10,'0')
+			,'SYSTEM'
+			,NULL
+			,'SYSTEM'
+			,NOW()
+			,NULL
+			,#{email}
+			,#{emailAuthnNum}
+			,'N'
+		)
+    </insert>
+</mapper>

@@ -1,16 +1,19 @@
 package com.planE.user.service;
 
-import com.planE.mail.dto.MailInputDto;
-import com.planE.mail.service.MailSendService;
-import com.planE.user.dto.UserDto;
-import com.planE.user.dto.UserLoginInputDto;
-import lombok.extern.slf4j.Slf4j;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.planE.mail.dto.EmailAuthnDto;
+import com.planE.mail.dto.MailInputDto;
+import com.planE.mail.repository.EmailAuthnRepository;
+import com.planE.mail.service.MailSendService;
+import com.planE.user.dto.UserLoginInputDto;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -18,6 +21,8 @@ public class UserLoginService {
 
     @Autowired
     MailSendService mailSendService;
+    @Autowired
+    EmailAuthnRepository emailAuthnRepository;
 
     @Transactional
     public Boolean signUp(UserLoginInputDto userLoginInputDto) {
@@ -42,10 +47,11 @@ public class UserLoginService {
             i++;
         }
 
-        // 유저명, 이메일 주소에 생성된 인증번호 DB 저장 로직 필요
-
-
-
+        // 이메일 인증번호 DB 저장
+        EmailAuthnDto EmailAuthnDTO = new EmailAuthnDto();
+		EmailAuthnDTO.setEmail(toUser);
+		EmailAuthnDTO.setEmailAuthnNum(mailNumber);
+		emailAuthnRepository.insertEmailAuthn(EmailAuthnDTO);
 
         // 메일 발송
         toUserLists.add(toUser);
