@@ -8,5 +8,6 @@ import java.util.List;
 @Mapper
 //@Repository
 public interface UserRepository {
-    List<UserDto> getUserList();
+
+    List<UserDto> userFind(String email);
 }

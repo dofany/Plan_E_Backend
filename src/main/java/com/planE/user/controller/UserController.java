@@ -22,13 +22,9 @@ public class UserController {
     UserService userService;
 
     @ApiOperation("사용자목록조회")
-    @GetMapping("/user/getUserList")
-    public List<UserDto> getUserList() {
-        log.info("--- com.planE.user.controller.UserController.getUserList() start ---");
-        List<UserDto> userList = userService.getUserList();
-        log.info("--- com.planE.user.controller.UserController.getUserList() end ---");
-        return userList;
+    @GetMapping("/user/userFind")
+    public List<UserDto> userFind(String email) {
+        return userService.userFind(email);
     }
-
 
 }
