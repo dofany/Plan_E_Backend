@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.planE.mail.repository.EmailAuthnRepository">
 
-    <insert id="insertEmailAuthn" parameterType="com.planE.mail.dto.EmailAuthnDTO">
+    <insert id="insertEmailAuthn" parameterType="com.planE.mail.dto.EmailAuthnDto">
 		INSERT INTO EMAIL_AUTHN(
 			EMAIL_AUTHN_ID
 			,SYS_CREAT_ID
