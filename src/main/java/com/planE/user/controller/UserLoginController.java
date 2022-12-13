@@ -22,9 +22,10 @@ public class UserLoginController {
 
     @ApiOperation("사용자로그인인증")
     @PostMapping("/user/login")
-    public String login(@RequestBody UserDto userDto) {
+    public String login(@RequestBody UserLoginInputDto userLoginInputDto) {
         log.info("--- com.planE.user.controller.UserLoginController.login() start ---");
-        log.info("userId :: {}, userPw :: {}", userDto.getUserId(), userDto.getUserPw());
+        log.info("userId :: {}, userPw :: {}", userLoginInputDto.getUserEmail(), userLoginInputDto.getUserPw());
+        Boolean result = userLoginService.login(userLoginInputDto);
         log.info("--- com.planE.user.controller.UserLoginController.login() end ---");
         return "Y";
     }

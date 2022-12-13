@@ -72,4 +72,38 @@ public class UserLoginService {
         }
 
     }
+
+
+    @Transactional
+    public Boolean login(UserLoginInputDto userLoginInputDto) {
+        log.info("--- com.planE.user.service.UserLoginService.login() start ---");
+
+        // 사용자 정보 조회
+
+        // 사용자 계정 존재 여부 확인
+        if(true) {
+
+        } else {
+            // 사용자 인증 실패 이력 삽입
+            return false;
+        }
+
+        // 사용자 패스워드 일치 여부 확인
+        if(true) {
+
+        } else {
+            // 사용자 인증 실패 이력 삽입
+            return false;
+        }
+
+
+        // 토큰 부여 로직 호출
+
+        // 로그인 이력 생성
+
+        log.info("--- com.planE.user.service.UserLoginService.login() end ---");
+
+        return true;
+
+    }
 }
