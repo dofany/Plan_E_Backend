@@ -8,7 +8,10 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserLoginInputDto {
+	
+	@NonNull
     private String userEmail;
+    @NonNull
     private String userPw;
     private String userName;
     private String inputEmail;

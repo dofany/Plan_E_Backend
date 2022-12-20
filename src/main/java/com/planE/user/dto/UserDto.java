@@ -3,6 +3,8 @@ package com.planE.user.dto;
 import com.planE.common.base.dto.BaseDto;
 import lombok.*;
 
+@Setter
+@Getter
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

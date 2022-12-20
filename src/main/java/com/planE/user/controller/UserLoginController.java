@@ -27,7 +27,12 @@ public class UserLoginController {
         log.info("userId :: {}, userPw :: {}", userLoginInputDto.getUserEmail(), userLoginInputDto.getUserPw());
         Boolean result = userLoginService.login(userLoginInputDto);
         log.info("--- com.planE.user.controller.UserLoginController.login() end ---");
-        return "Y";
+        
+        if(result == true ) {
+        	return "Y";
+        } else {
+        	return "N";
+        }
     }
 
     @ApiOperation("가입신청")
