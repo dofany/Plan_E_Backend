@@ -141,7 +141,6 @@ public class UserLoginService {
         if(userInfo.get(0).getUserPw().equals(userPwd)) {
         	log.info("--- com.planE.user.service.UserLoginService.login()_UserPwd OK ---");
         } else {
-        	log.info("====================" + userPwd);
         	log.info("--- com.planE.user.service.UserLoginService.login()_UserPwd NOT OK ---");
             
         	// 로그인 이력 생성 && Response
