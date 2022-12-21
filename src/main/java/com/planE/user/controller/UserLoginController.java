@@ -1,5 +1,6 @@
 package com.planE.user.controller;
 
+import com.planE.user.dto.LoginResltDto;
 import com.planE.user.dto.UserDto;
 import com.planE.user.dto.UserLoginInputDto;
 import com.planE.user.service.UserLoginService;
@@ -22,17 +23,16 @@ public class UserLoginController {
 
     @ApiOperation("사용자로그인인증")
     @PostMapping("/user/login")
-    public String login(@RequestBody UserLoginInputDto userLoginInputDto) {
+    public LoginResltDto login(@RequestBody UserLoginInputDto userLoginInputDto) {
         log.info("--- com.planE.user.controller.UserLoginController.login() start ---");
         log.info("userId :: {}, userPw :: {}", userLoginInputDto.getUserEmail(), userLoginInputDto.getUserPw());
-        Boolean result = userLoginService.login(userLoginInputDto);
+        
+        LoginResltDto result = new LoginResltDto();
+        result = userLoginService.login(userLoginInputDto);
         log.info("--- com.planE.user.controller.UserLoginController.login() end ---");
         
-        if(result == true ) {
-        	return "Y";
-        } else {
-        	return "N";
-        }
+        
+        return result;
     }
 
     @ApiOperation("가입신청")

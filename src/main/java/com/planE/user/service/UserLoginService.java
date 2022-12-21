@@ -11,7 +11,7 @@ import com.planE.mail.dto.EmailAuthnDto;
 import com.planE.mail.dto.MailInputDto;
 import com.planE.mail.repository.EmailAuthnRepository;
 import com.planE.mail.service.MailSendService;
-import com.planE.user.dto.LoginHstDto;
+import com.planE.user.dto.LoginResltDto;
 import com.planE.user.dto.UserDto;
 import com.planE.user.dto.UserLoginInputDto;
 import com.planE.user.repository.UserRepository;
@@ -84,10 +84,10 @@ public class UserLoginService {
 
 
     @Transactional
-    public Boolean login(UserLoginInputDto userLoginInputDto) {
+    public LoginResltDto login(UserLoginInputDto userLoginInputDto) {
         log.info("--- com.planE.user.service.UserLoginService.login() start ---");
            
-        String userEmail = userLoginInputDto.getUserEmail();
+        String userEmail = userLoginInputDto.getInputEmail();
         List<UserDto> userInfo = new ArrayList<>();
         userInfo = userService.userFind(userEmail);
 
@@ -96,24 +96,28 @@ public class UserLoginService {
         	log.info("--- com.planE.user.service.UserLoginService.login()_UserExistent OK ---");
         } else {
         	log.info("--- com.planE.user.service.UserLoginService.login()_UserExistent NOT OK ---");
-            return false;
+        	
+            // 로그인 이력 생성 && Response
+            LoginResltDto loginResltDto = new LoginResltDto();
+        	loginResltDto.setSucesYn("N");
+        	loginResltDto.setLoginAthnType("1"); // 없는 email
+            return loginResltDto;
         }
 		
-		// 로그인 이력 생성용
-        LoginHstDto loginHstDto = new LoginHstDto();
-        
 		// 계정 상태 확인
 		if(userInfo.get(0).getUserStatus().equals(1)) {
 			log.info("--- com.planE.user.service.UserLoginService.login()_UserStatus OK ---");
 		} else {
 			log.info("--- com.planE.user.service.UserLoginService.login()_UserStatus NOT OK ---");
-        	// 로그인 실패 이력 생성 INSERT
-			loginHstDto.setUserId(userInfo.get(0).getUserId());
-        	loginHstDto.setLoginAthnType("2");
-        	loginHstDto.setSucesYn("N");
-        	userRepository.lgnHstInsert(loginHstDto);
+	        
+			// 로그인 이력 생성 && Response
+	        LoginResltDto loginResltDto = new LoginResltDto();
+			loginResltDto.setUserId(userInfo.get(0).getUserId());
+			loginResltDto.setLoginAthnType("2");
+			loginResltDto.setSucesYn("N");
+        	userRepository.lgnHstInsert(loginResltDto);
 			
-			return false;
+			return loginResltDto;
         }
 		
 		// 로그인 실패 횟수 5회 미만
@@ -121,27 +125,31 @@ public class UserLoginService {
 			log.info("--- com.planE.user.service.UserLoginService.login()_UserFailCnt OK ---");
 		} else {
 			log.info("--- com.planE.user.service.UserLoginService.login()_UserFailCnt NOT OK ---");
-        	// 로그인 실패 이력 생성 INSERT
-			loginHstDto.setUserId(userInfo.get(0).getUserId());
-        	loginHstDto.setLoginAthnType("3");
-        	loginHstDto.setSucesYn("N");
-        	userRepository.lgnHstInsert(loginHstDto);
+
+	        // 로그인 이력 생성 && Response
+	        LoginResltDto loginResltDto = new LoginResltDto();
+			loginResltDto.setUserId(userInfo.get(0).getUserId());
+        	loginResltDto.setLoginAthnType("3");
+        	loginResltDto.setSucesYn("N");
+        	userRepository.lgnHstInsert(loginResltDto);
         	
-			return false;
+			return loginResltDto;
 		}
         
         // 사용자 패스워드 일치 여부 확인 
-        String userPwd = userLoginInputDto.getUserPw();
+        String userPwd = userLoginInputDto.getInputPw();
         if(userInfo.get(0).getUserPw().equals(userPwd)) {
         	log.info("--- com.planE.user.service.UserLoginService.login()_UserPwd OK ---");
         } else {
-
+        	log.info("====================" + userPwd);
         	log.info("--- com.planE.user.service.UserLoginService.login()_UserPwd NOT OK ---");
-        	// 로그인 실패 이력 생성 INSERT
-			loginHstDto.setUserId(userInfo.get(0).getUserId());
-        	loginHstDto.setLoginAthnType("4");
-        	loginHstDto.setSucesYn("N");
-        	userRepository.lgnHstInsert(loginHstDto);
+            
+        	// 로그인 이력 생성 && Response
+            LoginResltDto loginResltDto = new LoginResltDto();
+			loginResltDto.setUserId(userInfo.get(0).getUserId());
+        	loginResltDto.setLoginAthnType("4");
+        	loginResltDto.setSucesYn("N");
+        	userRepository.lgnHstInsert(loginResltDto);
         	
         	
         	//user_bas 로그인 횟수 +1
@@ -150,18 +158,16 @@ public class UserLoginService {
         	userDto.setLgnFailCnt(userInfo.get(0).getLgnFailCnt()+1);
         	userRepository.lgnFailUpdate(userDto);
         	
-        	return false;
+        	return loginResltDto;
         	
         }
 
-
-        // 토큰 부여 로직 호출 ?
-
-        // 로그인 성공 이력 생성
-		loginHstDto.setUserId(userInfo.get(0).getUserId());
-    	loginHstDto.setLoginAthnType("5");
-    	loginHstDto.setSucesYn("Y");
-    	userRepository.lgnHstInsert(loginHstDto);
+        // 로그인 성공  이력 생성 && Response
+        LoginResltDto loginResltDto = new LoginResltDto();
+		loginResltDto.setUserId(userInfo.get(0).getUserId());
+    	loginResltDto.setLoginAthnType("5");
+    	loginResltDto.setSucesYn("Y");
+    	userRepository.lgnHstInsert(loginResltDto);
     	
     	//failCent 리셋
     	UserDto userDto = new UserDto();
@@ -171,7 +177,7 @@ public class UserLoginService {
 
         log.info("--- com.planE.user.service.UserLoginService.login() end ---");
 
-        return true;
+        return loginResltDto;
 
     }
 }

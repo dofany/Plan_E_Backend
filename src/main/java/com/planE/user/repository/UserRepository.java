@@ -1,6 +1,6 @@
 package com.planE.user.repository;
 
-import com.planE.user.dto.LoginHstDto;
+import com.planE.user.dto.LoginResltDto;
 import com.planE.user.dto.UserDto;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -14,5 +14,5 @@ public interface UserRepository {
     
     void lgnFailUpdate(UserDto userDto);
     
-    void lgnHstInsert(LoginHstDto loginHisDto);
+    void lgnHstInsert(LoginResltDto loginHisDto);
 }
