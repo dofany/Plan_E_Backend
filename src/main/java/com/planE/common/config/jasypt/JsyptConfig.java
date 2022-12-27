@@ -1,4 +1,4 @@
-package com.planE.common.config;
+package com.planE.common.config.jasypt;
 
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
