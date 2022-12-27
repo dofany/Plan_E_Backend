@@ -25,4 +25,29 @@
 			,'N'
 		)
     </insert>
+    
+    <select id="selectEmailAuthn" resultType="com.planE.mail.dto.EmailAuthnDto">
+		SELECT 
+			EMAIL_AUTHN_ID
+			,SYS_CREAT_ID
+			,SYS_AMDR_ID
+			,SYS_SVC_ID
+			,SYS_RECD_CRET_DT
+			,SYS_RECD_CHG_DT
+			,EMAIL
+			,EMAIL_AUTHN_NUM
+			,EMAIL_AUTHN_YN
+		FROM EMAIL_AUTHN
+		WHERE EMAIL = #{email} 
+		ORDER BY SYS_RECD_CRET_DT DESC
+		LIMIT 1
+    </select>
+    
+    <update id="updateEmailAuthn" parameterType="com.planE.mail.dto.EmailAuthnDto">
+		UPDATE EMAIL_AUTHN 
+		SET EMAIL_AUTHN_YN = 'Y'
+		WHERE EMAIL = #{email} 
+		ORDER BY SYS_RECD_CRET_DT DESC
+		LIMIT 1
+    </update>
 </mapper>
