@@ -24,12 +24,13 @@ public class EmailAuthnController {
 	
 	@ApiOperation("이메일 인증")
 	@PostMapping("/mail/emailCheck")
-	public String emailCheck(@RequestBody EmailAuthnDto emailAuthnDto) {
+	public EmailAuthnDto emailCheck(@RequestBody EmailAuthnDto emailAuthnDto) {
 
 		log.info("--- com.planE.mail.controller.EmailAuthnController.emailAuthn() start ---");
 		
-		String result = emailAuthnService.emailCheck(emailAuthnDto);
-
+		EmailAuthnDto result = new EmailAuthnDto();
+		result = emailAuthnService.emailCheck(emailAuthnDto);
+		
 		log.info("--- com.planE.mail.controller.EmailAuthnController.emailAuthn() end ---");
 		
 		return result;

@@ -21,17 +21,18 @@ public class EmailAuthnService {
 	private EmailAuthnRepository emailAuthnRepository;
 
 	@Transactional
-	public String emailCheck(EmailAuthnDto emailAuthnDto) {
+	public EmailAuthnDto emailCheck(EmailAuthnDto emailAuthnDto) {
 		
 		log.info("--- com.planE.mail.service.EmailAuthnService.emailAuthn() start ---");
 	
-		String result;
+		EmailAuthnDto result = new EmailAuthnDto();
 		//최근 이메일 코드 체크
 		EmailAuthnDto resentAuthn = emailAuthnRepository.selectEmailAuthn(emailAuthnDto);
 		if(resentAuthn == null) {
 			
 			log.info("Fail Check EmailAuthn - No Result");
-			return "NoResult";
+			result.setResCd("1");
+			return result;
 		} else {
 			
 			LocalDateTime authnDt = resentAuthn.getSysRecdCretDt();
@@ -42,7 +43,8 @@ public class EmailAuthnService {
 			if(diffMin >= 5) {
 				//시간초과
 				log.info("Fail Check EmailAuthn - Time Expiration");
-				return "TimeExpiration";
+				result.setResCd("2");
+				return result;
 			}
 			
 			//인증번호 비교
@@ -51,11 +53,12 @@ public class EmailAuthnService {
 			if(authnNum.equals(emailAuthnDto.getEmailAuthnNum())) {
 				
 				log.info("Success Check EmailAuthn");
-				result = "Success";
+				result.setResCd("4");
 			} else {
 
 				log.info("Fail Check EmailAuthn - AuthnNums Not Same");
-				return "Fail";
+				result.setResCd("3");
+				return result;
 			}
 			
 			//인증성공
