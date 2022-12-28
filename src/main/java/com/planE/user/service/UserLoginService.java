@@ -216,7 +216,6 @@ public class UserLoginService {
 					userDto.setSysAmdrId("SYSTEM");
 					userDto.setSysSvcId("UserLoginService");
 					
-					userRepository.upNewPw(userDto);
 				} else {
 					log.info("--- com.planE.user.service.UserLoginService.login()_UserPwChange NOT OK ---");
 					return false;

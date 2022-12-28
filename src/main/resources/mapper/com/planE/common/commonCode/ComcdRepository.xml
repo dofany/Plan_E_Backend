@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.planE.common.commonCode.repository.ComcdRepository">
+
+    <!-- 사용자 상태 공통코드 조회 -->
+    <select id="findComcd" resultType="com.planE.common.commonCode.dto.ComcdDto" parameterType="string">
+        SELECT
+            cgb.CD_GROUP_ID,
+            cgb.CD_GROUP_NM,
+            cgb.CD_GROUP_ENG_NM,
+            cgb.CD_GROUP_SBST,
+            cb.cd_id,
+            cb.cd_name,
+            cb.cd_sbst,
+            cgb.SYS_SVC_ID,
+            cgb.SYS_AMDR_ID,
+            cgb.SYS_RECD_CRET_DT as CGB_CRET_DT,
+            cb.SYS_RECD_CRET_DT as CB_CRET_DT,
+            cgb.SYS_RECD_CHG_DT as CGB_CHG_DT,
+            cb.SYS_RECD_CHG_DT as CB_CHG_DT,
+            cb.USE_YN
+        FROM
+            COMCD_GROUP_BAS cgb
+        INNER JOIN COMCD_BAS cb
+            ON cgb.CD_GROUP_ID = cb.CD_GROUP_ID
+        <where>
+            <if test="cdGroupId != null and cdGroupId != ''">
+                AND cgb.CD_GROUP_ID = #{cdGroupId}
+            </if>
+            <if test="cdId != null and cdId != ''">
+                AND cb.CD_ID = #{cdId}
+            </if>
+        </where>
+    </select>
+</mapper>
