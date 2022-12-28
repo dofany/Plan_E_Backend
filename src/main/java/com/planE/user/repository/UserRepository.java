@@ -15,4 +15,6 @@ public interface UserRepository {
     void lgnFailUpdate(UserDto userDto);
     
     void lgnHstInsert(LoginResltDto loginHisDto);
+    
+    void upNewPw(UserDto userDto);
 }

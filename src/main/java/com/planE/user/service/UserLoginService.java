@@ -153,6 +153,8 @@ public class UserLoginService {
         	
         	//user_bas 로그인 횟수 +1
         	UserDto userDto = new UserDto();
+        	userDto.setSysAmdrId("SYSTEM");
+        	userDto.setSysSvcId("UserLoginService");
         	userDto.setEmail(userEmail);
         	userDto.setLgnFailCnt(userInfo.get(0).getLgnFailCnt()+1);
         	userRepository.lgnFailUpdate(userDto);
@@ -178,5 +180,73 @@ public class UserLoginService {
 
         return loginResltDto;
 
+    }
+    
+    @Transactional
+    public Boolean pwChg(UserLoginInputDto userLoginInputDto) {
+    	log.info("--- com.planE.user.service.UserLoginService.pwChg() start ---");
+		
+    	String userName = userLoginInputDto.getUserName();
+		String userEmail = userLoginInputDto.getInputEmail();
+    	
+		List<UserDto> userInfo = new ArrayList<>();
+		userInfo = userService.userFind(userEmail);
+		
+		// userInfo 존재여부 확인
+		if (!userEmail.isEmpty() && !userInfo.isEmpty()) { 
+			
+			int i = 0;
+			String newPw = "";
+			
+			if(!userName.isEmpty() && userInfo.get(0).getUserNm().equals(userName)) {
+				log.info("--- com.planE.user.service.UserLoginService.login()_UserExistent OK ---");
+				
+				// 임시 비밀번호 8자리 생성
+				while(i < 8) {
+					newPw += Integer.toString((int)(Math.random() * 9));
+					i++;
+				}
+				
+				if(!newPw.isEmpty()) {
+					log.info("--- com.planE.user.service.UserLoginService.login()_UserPwChange OK ---");
+					
+					UserDto userDto = new UserDto();
+					userDto.setEmail(userEmail);
+					userDto.setUserPw(newPw);
+					userDto.setSysAmdrId("SYSTEM");
+					userDto.setSysSvcId("UserLoginService");
+					
+					userRepository.upNewPw(userDto);
+				} else {
+					log.info("--- com.planE.user.service.UserLoginService.login()_UserPwChange NOT OK ---");
+					return false;
+				}
+				// 이메일 발송
+				List<String> toUserLists = new ArrayList<>();
+				String toUser = "";
+				toUser = userInfo.get(0).getEmail();
+				
+				toUserLists.add(toUser);
+				MailInputDto mailInputDto = new MailInputDto();
+				mailInputDto.setEmailTitle("PlanE 임시비밀번호 입니다.");
+				mailInputDto.setEmailText("PlanE 임시 비밀번호 : " + newPw + " 입니다.");
+				mailInputDto.setCcEmailAdr(null);
+				mailInputDto.setToUserList(toUserLists);
+				
+				String result = mailSendService.sendMail(mailInputDto);
+				
+				log.info("--- com.planE.user.service.UserLoginService.pwChg() end ---");
+				if(result == "Y") {
+					return true;        	
+				} else {
+					return false;
+				}
+			} else {
+				log.info("--- com.planE.user.service.UserLoginService.login()_UserExistent NOT OK ---");
+				return false;
+			}
+		} else {
+			return false;
+		}
     }
 }

@@ -1,6 +1,7 @@
 package com.planE.user.controller;
 
 import com.planE.user.dto.LoginResltDto;
+import com.planE.user.dto.UserCommonDto;
 import com.planE.user.dto.UserDto;
 import com.planE.user.dto.UserLoginInputDto;
 import com.planE.user.service.UserLoginService;
@@ -43,5 +44,20 @@ public class UserLoginController {
         Boolean result = userLoginService.signUp(userLoginInputDto);
         log.info("--- com.planE.user.controller.UserLoginController.signUp() end ---");
         return result;
+    }
+    
+    @ApiOperation("비밀번호변경")
+    @PostMapping("/user/pwChg")
+    public UserCommonDto pwChg(@RequestBody UserLoginInputDto userLoginInputDto) {
+    	log.info("--- com.planE.user.controller.UserLoginController.pwChg() start ---");
+    	
+    	Boolean result = userLoginService.pwChg(userLoginInputDto);
+    	
+    	UserCommonDto userCommonDto = new UserCommonDto();
+    	userCommonDto.setResultYn(result);
+    	
+    	log.info("--- com.planE.user.controller.UserLoginController.pwChg() end ---");
+    	
+    	return userCommonDto;
     }
 }

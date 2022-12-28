@@ -45,6 +45,9 @@
 	<update id="lgnFailUpdate" parameterType="com.planE.user.dto.UserDto">
 		UPDATE USER_BAS 
 		   SET LGN_FAIL_CNT = #{lgnFailCnt}
+		     , SYS_AMDR_ID = #{sysAmdrId}
+		   	 , SYS_RECD_CHG_DT = now()
+		     <!-- , SYS_SVC_ID = #{sysSvcId} -->
 		 WHERE EMAIL = #{email}
 	</update>
 	
@@ -63,6 +66,15 @@
 			,#{sucesYn}
 		)
 	</insert>
+	
+	<!-- 임시 비밀번호 update -->
+	<update id="upNewPw" parameterType="com.planE.user.dto.UserDto">
+		UPDATE USER_BAS 
+		   SET USER_PW = #{userPw}, SYS_AMDR_ID = #{sysAmdrId}
+		   	  ,SYS_RECD_CHG_DT = now(), SYS_SVC_ID = #{sysSvcId}
+		 WHERE EMAIL = #{email}
+	</update>
+	
 
 
 </mapper>
