@@ -21,7 +21,7 @@ public class EmailAuthnService {
 	private EmailAuthnRepository emailAuthnRepository;
 
 	@Transactional
-	public String emailCheck(String inputEmailAuthnNum, EmailAuthnDto emailAuthnDto) {
+	public String emailCheck(EmailAuthnDto emailAuthnDto) {
 		
 		log.info("--- com.planE.mail.service.EmailAuthnService.emailAuthn() start ---");
 	
@@ -48,7 +48,7 @@ public class EmailAuthnService {
 			//인증번호 비교
 			String authnNum = resentAuthn.getEmailAuthnNum();
 			
-			if(authnNum.equals(inputEmailAuthnNum)) {
+			if(authnNum.equals(emailAuthnDto.getEmailAuthnNum())) {
 				
 				log.info("Success Check EmailAuthn");
 				result = "Success";

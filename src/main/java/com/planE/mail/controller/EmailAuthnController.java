@@ -1,7 +1,6 @@
 package com.planE.mail.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,15 +23,12 @@ public class EmailAuthnController {
 	EmailAuthnService emailAuthnService;
 	
 	@ApiOperation("이메일 인증")
-	@PostMapping("/mail/emailCheck/{inputEmailAuthnNum}")
-	public String emailCheck(@PathVariable(required = false) String inputEmailAuthnNum, @RequestBody EmailAuthnDto emailAuthnDto) {
+	@PostMapping("/mail/emailCheck")
+	public String emailCheck(@RequestBody EmailAuthnDto emailAuthnDto) {
 
 		log.info("--- com.planE.mail.controller.EmailAuthnController.emailAuthn() start ---");
-		if (inputEmailAuthnNum == null) {
-			inputEmailAuthnNum = "blank";
-		}
 		
-		String result = emailAuthnService.emailCheck(inputEmailAuthnNum, emailAuthnDto);
+		String result = emailAuthnService.emailCheck(emailAuthnDto);
 
 		log.info("--- com.planE.mail.controller.EmailAuthnController.emailAuthn() end ---");
 		
