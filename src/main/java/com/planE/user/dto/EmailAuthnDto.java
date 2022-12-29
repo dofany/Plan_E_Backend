@@ -1,4 +1,4 @@
-package com.planE.mail.dto;
+package com.planE.user.dto;
 
 import com.planE.common.base.dto.BaseDto;
 

@@ -52,7 +52,7 @@
 	</update>
 	
 	<!-- 로그인 이력 insert -->
-	<insert id="lgnHstInsert" parameterType="com.planE.user.dto.LoginResltDto">
+	<insert id="lgnHstInsert" parameterType="com.planE.user.dto.UserAthnDto">
 		INSERT INTO LOGIN_HST
 		VALUES (
 			LPAD(GET_SEQ('SEQ_LOGIN_HST_ID'),10,'0')
