@@ -17,7 +17,6 @@ public class UserDto extends BaseDto {
     private String userBirthDate; // 사용자 생년월일
     private String phoneNum; // 사용자 핸드폰 번호
     private Integer lgnFailCnt; // 로그인 실패 횟수
-    private String lgnFailDt; // 로그인 실패 일시
     private Integer userStatus; // 상태
     private String userProfile; // 프로필
     private String profileSrc; // 프로필 사진 경로
