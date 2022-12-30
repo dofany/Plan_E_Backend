@@ -1,6 +1,5 @@
 package com.planE.common.commonCode.dto;
 
-import com.planE.common.base.dto.BaseDto;
 import lombok.*;
 
 @Setter
@@ -8,7 +7,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ComcdDto extends BaseDto {
+public class ComcdDto {
 
     private String cdGroupId;
     private String cdGroupNm;
