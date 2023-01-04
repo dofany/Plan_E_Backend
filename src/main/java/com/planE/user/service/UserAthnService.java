@@ -5,16 +5,16 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.planE.user.dto.UserAthnDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.planE.user.dto.EmailAuthnDto;
 import com.planE.mail.dto.MailInputDto;
-import com.planE.user.repository.UserAthnRepository;
 import com.planE.mail.service.MailSendService;
+import com.planE.user.dto.EmailAuthnDto;
+import com.planE.user.dto.UserAthnDto;
 import com.planE.user.dto.UserDto;
+import com.planE.user.repository.UserAthnRepository;
 import com.planE.user.repository.UserRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -333,5 +333,25 @@ public class UserAthnService {
 		userAthnDto.setSucesYn(successYn);
 		userRepository.lgnHstInsert(userAthnDto);
 	}
+	
+	//사용자 추가
+	@Transactional
+    public Boolean addUser(UserDto userDto) {
+        log.info("--- com.planE.user.service.UserAthnService.AddUser() start ---");
+
+        UserDto UserDto = new UserDto();
+        UserDto.setEmail(UserDto.getEmail());
+        UserDto.setUserPw(UserDto.getUserPw());  
+        UserDto.setUserNm(UserDto.getUserNm());
+        UserDto.setNickName(UserDto.getNickName());
+        UserDto.setUserBirthDate(UserDto.getUserBirthDate());
+        UserDto.setPhoneNum(UserDto.getPhoneNum());
+        
+        userAthnRepository.insertAddUser(userDto);
+        
+        log.info("--- com.planE.user.service.UserAthnService.AddUser() end ---");
+		
+        return true;
+    }
 
 }
