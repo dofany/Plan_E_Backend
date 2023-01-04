@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.planE.user.repository.UserAthnRepository">
 
+	<!-- 이메일 인증 정보 insert -->
     <insert id="insertEmailAuthn" parameterType="com.planE.user.dto.EmailAuthnDto">
 		INSERT INTO EMAIL_AUTHN(
 			EMAIL_AUTHN_ID
@@ -26,6 +27,7 @@
 		)
     </insert>
     
+    <!-- 최근 발급된 이메일 인증코드 조회 -->
     <select id="selectEmailAuthn" resultType="com.planE.user.dto.EmailAuthnDto">
 		SELECT 
 			EMAIL_AUTHN_ID
@@ -43,11 +45,13 @@
 		LIMIT 1
     </select>
     
+    <!-- 이메일 인증 성공 update -->
     <update id="updateEmailAuthn" parameterType="com.planE.user.dto.EmailAuthnDto">
 		UPDATE EMAIL_AUTHN 
-		SET EMAIL_AUTHN_YN = 'Y'
+		SET EMAIL_AUTHN_YN = 'Y',
+			SYS_AMDR_ID = 'SYSTEM',
+			SYS_RECD_CHG_DT = NOW()
 		WHERE EMAIL = #{email} 
-		ORDER BY SYS_RECD_CRET_DT DESC
-		LIMIT 1
+		AND EMAIL_AUTHN_NUM = #{emailAuthnNum}
     </update>
 </mapper>

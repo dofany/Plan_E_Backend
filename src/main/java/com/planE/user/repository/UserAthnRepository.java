@@ -15,5 +15,5 @@ public interface UserAthnRepository {
 	
 	public EmailAuthnDto selectEmailAuthn(String email);
 	
-	public void updateEmailAuthn(String email);
+	public void updateEmailAuthn(String email, String emailAuthnNum);
 }

@@ -10,7 +10,7 @@ import lombok.*;
 public class UserAthnDto {
 	
 
-    private String userEmail;       // 사용자 이메일
+    private String email;       // 사용자 이메일
     private String emailAuthnNum;   // 이메일 인증번호
     private String userPw;          // 사용자 패스워드
     private String userNm;          // 사용자명

@@ -27,7 +27,7 @@ public class UserAthnController {
 	@PostMapping("/userAthn/login")
 	public UserAthnDto login(@RequestBody UserAthnDto userAthnDto) {
 		log.info("--- com.planE.user.controller.UserAthnController.login() start ---");
-		log.info("userId :: {}, userPw :: {}", userAthnDto.getUserEmail(), userAthnDto.getUserPw());
+		log.info("userId :: {}, userPw :: {}", userAthnDto.getEmail(), userAthnDto.getUserPw());
 
 
 		UserAthnDto result = userAthnService.login(userAthnDto);
@@ -52,7 +52,7 @@ public class UserAthnController {
 
 		log.info("--- com.planE.user.controller.UserAthnController.emailAuthn() start ---");
 
-		EmailAuthnDto result = userAthnService.emailCheck(userAthnDto.getUserEmail(), userAthnDto.getEmailAuthnNum());
+		EmailAuthnDto result = userAthnService.emailCheck(userAthnDto.getUserNm(), userAthnDto.getUserPw(), userAthnDto.getEmail(), userAthnDto.getEmailAuthnNum());
 
 		log.info("--- com.planE.user.controller.UserAthnController.emailAuthn() end ---");
 

@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.planE.mail.dto.MailInputDto;
-import com.planE.mail.service.MailSendService;
-import com.planE.user.dto.EmailAuthnDto;
 import com.planE.user.dto.UserAthnDto;
+import com.planE.user.dto.EmailAuthnDto;
+import com.planE.mail.dto.MailInputDto;
 import com.planE.user.dto.UserDto;
+import com.planE.mail.service.MailSendService;
 import com.planE.user.repository.UserAthnRepository;
 import com.planE.user.repository.UserRepository;
 
@@ -45,8 +45,8 @@ public class UserAthnService {
         String toUser = "";
 
         // 입력값 체크
-        if(userAthnDto.getUserEmail() != null && !userAthnDto.getUserEmail().isEmpty()) {
-            toUser = userAthnDto.getUserEmail();
+        if(userAthnDto.getEmail() != null && !userAthnDto.getEmail().isEmpty()) {
+            toUser = userAthnDto.getEmail();
         } else {
 			result.setResult(false);
 			result.setResultMsg("이메일 주소를 입력해주세요.");
@@ -54,7 +54,7 @@ public class UserAthnService {
         }
 
 		List<UserDto> userInfo = new ArrayList<>();
-		userInfo = userService.userFind(userAthnDto.getUserEmail());
+		userInfo = userService.userFind(userAthnDto.getEmail());
 
 		// 이메일 계정 존재시
 		if(userInfo.size() > 0) {
@@ -103,7 +103,7 @@ public class UserAthnService {
     public UserAthnDto login(UserAthnDto userAthnDto) {
         log.info("--- com.planE.user.service.UserAthnService.login() start ---");
            
-        String userEmail = userAthnDto.getUserEmail();
+        String userEmail = userAthnDto.getEmail();
 
 		List<UserDto> userInfo = new ArrayList<>();
         userInfo = userService.userFind(userEmail);
@@ -201,7 +201,7 @@ public class UserAthnService {
     	log.info("--- com.planE.user.service.UserAthnService.pwChg() start ---");
 		
     	String userName = userAthnDto.getUserNm();
-		String userEmail = userAthnDto.getUserEmail();
+		String userEmail = userAthnDto.getEmail();
     	
 		List<UserDto> userInfo = new ArrayList<>();
 		userInfo = userService.userFind(userEmail);
@@ -267,17 +267,17 @@ public class UserAthnService {
 
 
 	@Transactional
-	public EmailAuthnDto emailCheck(String email, String emailAuthnNum) {
+	public EmailAuthnDto emailCheck(String userNm, String userPw, String email, String emailAuthnNum) {
 
 		log.info("--- com.planE.user.service.UserAthnService.emailAuthn() start ---");
 
 		EmailAuthnDto result = new EmailAuthnDto();
 
-		//최근 이메일 코드 체크
-		EmailAuthnDto resentAuthn = userAthnRepository.selectEmailAuthn(email);
+		// 최근 이메일 인증코드 체크
+		EmailAuthnDto resentAuthnInfo = userAthnRepository.selectEmailAuthn(email);
 
 		// 조회된 인증 데이터가 없을시
-		if(resentAuthn == null) {
+		if(resentAuthnInfo == null) {
 
 			log.info("Fail Check EmailAuthn - No Result");
 			result.setResCd("1");
@@ -285,7 +285,7 @@ public class UserAthnService {
 		} else {
 
 			// 인증번호 유효시간 체크
-			LocalDateTime authnDt = resentAuthn.getSysRecdCretDt();
+			LocalDateTime authnDt = resentAuthnInfo.getSysRecdCretDt();
 			LocalDateTime now = LocalDateTime.now();
 
 			float diffMin = (float) (ChronoUnit.SECONDS.between(authnDt, now) / 60.0);
@@ -298,7 +298,7 @@ public class UserAthnService {
 			}
 
 			//인증번호 비교
-			String authnNum = resentAuthn.getEmailAuthnNum();
+			String authnNum = resentAuthnInfo.getEmailAuthnNum();
 
 			// 조회된 인증번호와 입력된 인증번호가 같을시 정상 처리
 			if(authnNum.equals(emailAuthnNum)) {
@@ -312,10 +312,17 @@ public class UserAthnService {
 				return result;
 			}
 
-			// 인증성공시 인증 성공 여부 업데이트
-			userAthnRepository.updateEmailAuthn(email);
+			// *인증성공*
+			// 1. 인증 성공 여부 업데이트
+			userAthnRepository.updateEmailAuthn(email, emailAuthnNum);
 			log.info("Success Update EmailAuthn");
-
+			// 2. 사용자 생성
+			UserDto	userDto = new UserDto();
+			userDto.setUserNm(userNm);
+			userDto.setUserPw(userPw);
+			userDto.setEmail(email);
+			userService.addUser(userDto);
+			log.info("Success Insert SignUp User");
 		}
 
 
@@ -333,5 +340,5 @@ public class UserAthnService {
 		userAthnDto.setSucesYn(successYn);
 		userRepository.lgnHstInsert(userAthnDto);
 	}
-	
+
 }
