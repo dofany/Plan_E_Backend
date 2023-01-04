@@ -1,8 +1,5 @@
 package com.planE.auth.controller;
 
-//import com.planE.auth.dto.User;
-//import com.planE.auth.dto.UserAuthDto;
-//import com.planE.auth.service.AuthJwtSevice;
 import com.planE.user.dto.UserDto;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +20,6 @@ import java.util.Map;
 @Slf4j
 @CrossOrigin("*")
 public class AuthSessionController {
-    @Autowired
-   // AuthJwtSevice jwtService;
     @PostMapping("/sessionLogin") // 로그인, 세션로그인
     public String login(@RequestBody UserDto userDto, HttpServletRequest request, RedirectAttributes redirect)  throws  Exception{
 
