@@ -50,42 +50,4 @@
 		ORDER BY SYS_RECD_CRET_DT DESC
 		LIMIT 1
     </update>
-    
-    <insert id="insertAddUser" parameterType="com.planE.user.dto.UserDto">
-		INSERT INTO USER_BAS(
-			USER_ID
-			,SYS_CREAT_ID
-			,SYS_AMDR_ID
-			,SYS_SVC_ID
-			,SYS_RECD_CRET_DT
-			,SYS_RECD_CHG_DT
-			,EMAIL
-			,USER_PW
-			,USER_NM
-			,NICK_NAME
-			,USER_BIRTH_DATE
-			,PHONE_NUM
-			,LGN_FAIL_CNT
-			,USER_STATUS
-			,PROFILE
-			,PROFILE_SRC
-		) VALUES (
-			(SELECT CONCAT('ID_',NOW()+0, LPAD(IFNULL(MAX(SUBSTR(LPAD(GET_SEQ('SEQ_USER_BAS_ID'),10,'0'),-1,3)), 1), 3, '0')) FROM DUAL)
-			, 'SYSTEM'
-			, NULL
-			, 'SYSTEM'
-			, NOW()
-			, NULL
-			, #{email}
-			, #{userPw}
-			, #{userNm}
-			, #{nickName}
-			, #{userBirthDate}
-			, #{phoneNum}
-			, 0
-			, '1'
-			, NULL
-			, NULL
-		)
-    </insert>
 </mapper>

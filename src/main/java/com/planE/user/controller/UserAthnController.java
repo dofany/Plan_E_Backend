@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.planE.user.dto.EmailAuthnDto;
 import com.planE.user.dto.UserAthnDto;
-import com.planE.user.dto.UserDto;
 import com.planE.user.service.UserAthnService;
 
 import io.swagger.annotations.Api;
@@ -75,14 +74,4 @@ public class UserAthnController {
 		return result;
 	}
 	
-	@ApiOperation("사용자 추가")
-    @PostMapping("/user/addUser")
-    public Boolean addUser(@RequestBody UserDto userDto) {
-        log.info("--- com.planE.user.controller.UserAthnController.AddUser() start ---");
-        log.info(userDto.toString());
-        Boolean result = userAthnService.addUser(userDto);
-        log.info("--- com.planE.user.controller.UserAthnController.AddUser() end ---");
-        return result;
-    }
-
 }

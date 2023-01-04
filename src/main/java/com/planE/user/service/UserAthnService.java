@@ -334,24 +334,4 @@ public class UserAthnService {
 		userRepository.lgnHstInsert(userAthnDto);
 	}
 	
-	//사용자 추가
-	@Transactional
-    public Boolean addUser(UserDto userDto) {
-        log.info("--- com.planE.user.service.UserAthnService.AddUser() start ---");
-
-        UserDto UserDto = new UserDto();
-        UserDto.setEmail(UserDto.getEmail());
-        UserDto.setUserPw(UserDto.getUserPw());  
-        UserDto.setUserNm(UserDto.getUserNm());
-        UserDto.setNickName(UserDto.getNickName());
-        UserDto.setUserBirthDate(UserDto.getUserBirthDate());
-        UserDto.setPhoneNum(UserDto.getPhoneNum());
-        
-        userAthnRepository.insertAddUser(userDto);
-        
-        log.info("--- com.planE.user.service.UserAthnService.AddUser() end ---");
-		
-        return true;
-    }
-
 }

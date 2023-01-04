@@ -1,11 +1,15 @@
 package com.planE.user.service;
 
-import com.planE.user.dto.UserDto;
-import com.planE.user.repository.UserRepository;
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.planE.user.dto.UserDto;
+import com.planE.user.repository.UserRepository;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -17,5 +21,25 @@ public class UserService {
     	
         return userRepository.userFind(email);
     }
+    
+    //사용자 추가
+  	@Transactional
+      public Boolean addUser(UserDto userDto) {
+          log.info("--- com.planE.user.service.UserService.AddUser() start ---");
+
+          UserDto UserDto = new UserDto();
+          UserDto.setEmail(UserDto.getEmail());
+          UserDto.setUserPw(UserDto.getUserPw());  
+          UserDto.setUserNm(UserDto.getUserNm());
+          UserDto.setNickName(UserDto.getNickName());
+          UserDto.setUserBirthDate(UserDto.getUserBirthDate());
+          UserDto.setPhoneNum(UserDto.getPhoneNum());
+          
+          userRepository.insertAddUser(userDto);
+          
+          log.info("--- com.planE.user.service.UserService.AddUser() end ---");
+  		
+          return true;
+      }
 
 }

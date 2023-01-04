@@ -1,10 +1,11 @@
 package com.planE.user.repository;
 
-import com.planE.user.dto.UserAthnDto;
-import com.planE.user.dto.UserDto;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
+import com.planE.user.dto.UserAthnDto;
+import com.planE.user.dto.UserDto;
 
 @Mapper
 //@Repository
@@ -17,4 +18,6 @@ public interface UserRepository {
     void lgnHstInsert(UserAthnDto UserAthnDto);
 
     void upNewPw(UserDto userDto);
+    
+    public void insertAddUser(UserDto userDTO);
 }
