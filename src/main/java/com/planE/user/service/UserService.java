@@ -31,9 +31,6 @@ public class UserService {
           UserDto.setEmail(UserDto.getEmail());
           UserDto.setUserPw(UserDto.getUserPw());  
           UserDto.setUserNm(UserDto.getUserNm());
-          UserDto.setNickName(UserDto.getNickName());
-          UserDto.setUserBirthDate(UserDto.getUserBirthDate());
-          UserDto.setPhoneNum(UserDto.getPhoneNum());
           
           userRepository.insertAddUser(userDto);
           
