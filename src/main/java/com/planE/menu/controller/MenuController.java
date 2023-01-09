@@ -36,10 +36,12 @@ public class MenuController {
 	@ApiOperation("메뉴 추가")
 	@PostMapping("/menu/addMenu")
 	public MenuDto addMenu(@RequestBody MenuDto menuDto) {
+		log.info("--- com.planE.menu.controller.MenuController.addMenu() start ---");
 		
 		MenuDto result = menuService.addMenu(menuDto);
 		
 		log.info("--- com.planE.menu.controller.MenuController.addMenu() end ---");
+		
 		return  result;
 	}
 	

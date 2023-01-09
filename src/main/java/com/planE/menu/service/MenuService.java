@@ -27,22 +27,15 @@ public class MenuService {
 	public MenuDto addMenu(MenuDto menuDto) {
 		log.info("--- com.planE.menu.service.MenuService.addMenu() start ---");
 		
-		MenuDto menu = new MenuDto();
-		menu.setMenuNm(menuDto.getMenuNm());
-		menu.setMenuOdrg(menuDto.getMenuOdrg());
-		
-		log.info("======================" + menu);
-		int result = menuRepository.addMenu(menu);
-		log.info("ddddddddddddddd" + result);
-		
-		// MENU INSERT 결과값 RESULT 에 SET 해서 보내주기
-		
+		int result = menuRepository.addMenu(menuDto);
 		MenuDto resultYn = new MenuDto();
 		
 		if(result == 1) {
 			resultYn.setResult(true);
+			log.info("--- com.planE.menu.service.MenuService.addMenu() end ---");
 		}else {
 			resultYn.setResult(false);
+			log.info("--- com.planE.menu.service.MenuService.addMenu() insert failed ---");
 		}
 
 		return resultYn;
