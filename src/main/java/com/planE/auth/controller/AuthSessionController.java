@@ -1,53 +1,53 @@
 package com.planE.auth.controller;
 
+import static org.springframework.util.ObjectUtils.isEmpty;
+
+import com.planE.auth.filter.SessionConst;
 import com.planE.user.dto.UserDto;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Map;
 
-@Api("세션로그인")
+@Api("세션 로그인 및 로그아웃")
 @RestController
 @RequestMapping("${property.api.end-point}")
 @Slf4j
 @CrossOrigin("*")
 public class AuthSessionController {
-    @PostMapping("/sessionLogin") // 로그인, 세션로그인
-    public String login(@RequestBody UserDto userDto, HttpServletRequest request, RedirectAttributes redirect)  throws  Exception{
 
-        log.info("sessionLogin!!!!");
+    // 로그인, 세션로그인
+    @PostMapping("/auth/sessionLogin")
+    public String login(@RequestBody UserDto user, HttpServletRequest request){
+        // userAuthService에서 유저 조회시 유저가 없을땐 N / 있으면 세션값 생성 및 email 정보 세션안으로 set
+        if (isEmpty(user)) {
+            return "N";
+        } else {
+            HttpSession session = request.getSession(true);
+            session.setAttribute(SessionConst.SESSION_USER_EMAIL, user.getEmail());
+            return "Y";
+        }
+    }
 
+    // 로그아웃, 세션 로그아웃
+    @GetMapping("/auth/sessionLogout")
+    public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession();
 
-        if(userDto == null)
-        {
-            log.info("!@#!@#@!#!@#!@#");
-            session.setAttribute("user", null);
-            redirect.addFlashAttribute("msg", false);
-            log.info("!@#!@#@!#!@#!@#" + session);
-        }else{
-            log.info("!@@@@@");
-            //로그인 성공처리
-            //세션이 있으면 있는 세션 반환, 없으면 신규 세션을 생성
-            session.setAttribute("user", userDto);
-            log.info("!@@@@@" + session);
-            log.info("로그인 성공!!!");
+        log.info("=========== session : {} ===========", session);
+        log.info("=========== session before state : {} ===========", session.getAttribute(SessionConst.SESSION_USER_EMAIL));
+
+        if(session == null) {
+            return "N";
+        } else {
+            // 세션 삭제
+            session.removeAttribute(SessionConst.SESSION_USER_EMAIL);
+            // 사용자가 요청을 또 보내면 모든 정보가 그대로 남아있기 때문에 재생성
+            // request.getSession(true);
+            log.info("=========== session delete state : {} ===========", request.getSession());
+            log.info("=========== session after state : {} ===========", session.getAttribute(SessionConst.SESSION_USER_EMAIL));
+            return "Y";
         }
-        return "redirect:/";
-    }
-    @GetMapping("/sessionLogout") // 로그아웃, 세션 로그아웃
-    public String logout(HttpSession session) throws Exception{
-        log.info("session!!!"  + session);
-        session.invalidate();
-        log.info("로그아웃 성공!!!");
-        return "redirect:/";
     }
 }
