@@ -19,5 +19,5 @@ public interface UserRepository {
 
     void upNewPw(UserDto userDto);
     
-    public void insertAddUser(UserDto userDTO);
+    void insertAddUser(UserDto userDTO);
 }

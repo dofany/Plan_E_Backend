@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.planE.menu.repository.MenuRepository">
+
+	<select id="findMenu" resultType="com.planE.menu.dto.MenuDto">
+		SELECT
+				*
+		  FROM MENU_BAS 
+	</select>
+	
+	<insert id="addMenu" parameterType="com.planE.menu.dto.MenuDto" >
+		INSERT INTO MENU_BAS(
+			 MENU_ID
+			,SYS_CREAT_ID
+			,SYS_AMDR_ID
+			,SYS_SVC_ID
+			,SYS_RECD_CRET_DT
+			,SYS_RECD_CHG_DT
+			,MENU_NM
+			,MENU_ODRG
+			,MENU_UP_ID
+			,USE_YN
+		) VALUES(
+			 LPAD(GET_SEQ('SEQ_MENU_ID'),10,'0')
+			,'ADMIN'
+			,NULL
+			,'MenuService'
+			,NOW()
+			,null
+			,#{menuNm}
+			,#{menuOdrg}
+			,#{menuUpId}
+			,'Y'
+		)
+	</insert>
+
+</mapper>
