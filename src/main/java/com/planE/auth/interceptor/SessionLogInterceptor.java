@@ -1,4 +1,4 @@
-package com.planE.auth.filter;
+package com.planE.auth.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.method.HandlerMethod;

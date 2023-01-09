@@ -1,7 +1,7 @@
 package com.planE.auth.config;
 
-import com.planE.auth.filter.SessionInterceptor;
-import com.planE.auth.filter.SessionLogInterceptor;
+import com.planE.auth.interceptor.SessionInterceptor;
+import com.planE.auth.interceptor.SessionLogInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
