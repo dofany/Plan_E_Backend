@@ -1,8 +1,8 @@
-package com.planE.auth.controller;
+package com.planE.common.session.controller;
 
 import static org.springframework.util.ObjectUtils.isEmpty;
 
-import com.planE.auth.interceptor.SessionConst;
+import com.planE.common.config.interceptor.SessionConst;
 import com.planE.user.dto.UserDto;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("${property.api.end-point}")
 @Slf4j
 @CrossOrigin("*")
-public class AuthSessionController {
+public class SessionController {
 
     // 로그인, 세션로그인
     @PostMapping("/auth/sessionLogin")

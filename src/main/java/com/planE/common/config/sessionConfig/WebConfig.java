@@ -1,7 +1,7 @@
-package com.planE.auth.config;
+package com.planE.common.config.sessionConfig;
 
-import com.planE.auth.interceptor.SessionInterceptor;
-import com.planE.auth.interceptor.SessionLogInterceptor;
+import com.planE.common.config.interceptor.SessionInterceptor;
+import com.planE.common.config.interceptor.SessionLogInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -22,6 +22,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/api/auth/sessionLogout",
                         "/api/userAthn/signUp",
                         "/api/userAthn/emailCheck",
+                        "/api/userAthn/pwChg",
                         "/error"
                 );
 
@@ -38,6 +39,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/api/auth/sessionLogout",
                         "/api/userAthn/signUp",
                         "/api/userAthn/emailCheck",
+                        "/api/userAthn/pwChg",
                         "/error"
                 );
     }
