@@ -21,6 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/api/auth/sessionLogin",
                         "/api/auth/sessionLogout",
                         "/api/userAthn/signUp",
+                        "/api/userAthn/emailCheck",
                         "/error"
                 );
 
@@ -36,6 +37,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/api/auth/sessionLogin",
                         "/api/auth/sessionLogout",
                         "/api/userAthn/signUp",
+                        "/api/userAthn/emailCheck",
                         "/error"
                 );
     }
