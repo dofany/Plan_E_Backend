@@ -21,47 +21,58 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("${property.api.end-point}")
 @Slf4j
 public class MenuController {
-	
+
 	@Autowired
 	MenuService menuService;
-	
-	//메뉴 전체 조회
+
+	// 메뉴 전체 조회
 	@ApiOperation("메뉴 전체 조회")
-	@GetMapping("/menu/findMenu")
-	public List<MenuDto> findMenu() {
-		return menuService.findMenu();
+	@GetMapping("/menu/findAllMenu")
+	public List<MenuDto> findAllMenu() {
+		return menuService.findAllMenu();
 	}
-	
-	//메뉴 생성
-	@ApiOperation("메뉴 추가")
+
+	// 메뉴 개별 조회
+	@ApiOperation("메뉴 개별 조회")
+	@GetMapping("/menu/findOneMenu")
+	public MenuDto findOneMenu(@RequestBody MenuDto menuDto) {
+		return menuService.findOneMenu(menuDto);
+	}
+
+	// 메뉴 생성
+	@ApiOperation("메뉴 생성")
 	@PostMapping("/menu/addMenu")
 	public MenuDto addMenu(@RequestBody MenuDto menuDto) {
 		log.info("--- com.planE.menu.controller.MenuController.addMenu() start ---");
-		
+
 		MenuDto result = menuService.addMenu(menuDto);
-		
+
 		log.info("--- com.planE.menu.controller.MenuController.addMenu() end ---");
-		
-		return  result;
+		return result;
 	}
-	
-	//메뉴 수정
+
+	// 메뉴 수정
 	@ApiOperation("메뉴 수정")
 	@PostMapping("/menu/editMenu")
-	public void editMenu() {
+	public MenuDto editMenu(@RequestBody MenuDto menuDto) {
 		log.info("--- com.planE.menu.controller.MenuController.editMenu() start ---");
-		
-		
+
+		MenuDto result = menuService.editMenu(menuDto);
+
 		log.info("--- com.planE.menu.controller.MenuController.editMenu() end ---");
+		return result;
 	}
-	
-	//메뉴 삭제는??
+
+	// 메뉴 삭제
 	@ApiOperation("메뉴 삭제")
 	@PostMapping("/menu/removeMenu")
-	public void removeMenu() {
+	public MenuDto removeMenu(@RequestBody MenuDto menuDto) {
 		log.info("--- com.planE.menu.controller.MenuController.removeMenu() start ---");
 		
+		MenuDto result = menuService.removeMenu(menuDto);
 		
 		log.info("--- com.planE.menu.controller.MenuController.removeMenu() end ---");
+		return result;
 	}
+	
 }

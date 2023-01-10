@@ -3,12 +3,22 @@
 
 <mapper namespace="com.planE.menu.repository.MenuRepository">
 
-	<select id="findMenu" resultType="com.planE.menu.dto.MenuDto">
+	<!-- 메뉴전체조회 -->
+	<select id="findAllMenu" resultType="com.planE.menu.dto.MenuDto">
 		SELECT
 				*
 		  FROM MENU_BAS 
 	</select>
 	
+	<!-- 메뉴개별조회 -->
+	<select id="findOneMenu" resultType="com.planE.menu.dto.MenuDto">
+		SELECT
+				*
+		  FROM MENU_BAS 
+		 WHERE MENU_ID = #{menuId}
+	</select>
+	
+	<!-- 메뉴추가 -->
 	<insert id="addMenu" parameterType="com.planE.menu.dto.MenuDto" >
 		INSERT INTO MENU_BAS(
 			 MENU_ID
@@ -34,5 +44,30 @@
 			,'Y'
 		)
 	</insert>
-
+	
+	<!-- 메뉴 수정 -->
+	<update id="editMenu" parameterType="com.planE.menu.dto.MenuDto">
+	UPDATE MENU_BAS 
+	   SET SYS_RECD_CHG_DT = NOW(),
+	   		<if test="menuNm != null and menuNm != ''">
+				MENU_NM = #{menuNm},
+			</if>
+			<if test="menuOdrg != null and menuOdrg != ''">
+				MENU_ODRG = #{menuOdrg},
+			</if>
+			<if test="menuUpId != null and menuUpId != ''">
+				MENU_UP_ID = #{menuUpId},
+			</if>
+			<if test="useYn != null and useYn != ''">
+				USE_YN = #{useYn}
+			</if>
+	 WHERE MENU_ID = #{menuId}
+	</update>
+	
+	<!-- 메뉴 삭제 -->
+	<delete id="removeMenu" parameterType="com.planE.menu.dto.MenuDto">
+	DELETE 
+	  FROM MENU_BAS
+	 WHERE MENU_ID = #{menuId}
+	</delete>
 </mapper>

@@ -9,8 +9,14 @@ import com.planE.menu.dto.MenuDto;
 @Mapper
 public interface MenuRepository {
 	
-	List<MenuDto> findMenu();
+	List<MenuDto> findAllMenu();
+	
+	MenuDto findOneMenu(MenuDto menuDto);
 
 	int addMenu(MenuDto menuDto);
+
+	int editMenu(MenuDto menuDto);
+
+	int removeMenu(MenuDto menuDto);
 
 }

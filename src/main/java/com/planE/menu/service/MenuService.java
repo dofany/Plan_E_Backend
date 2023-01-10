@@ -19,23 +19,95 @@ public class MenuService {
 	MenuRepository menuRepository;
 	
 	@Transactional
-	public List<MenuDto> findMenu() {
-		return menuRepository.findMenu();
+	public List<MenuDto> findAllMenu() {
+		return menuRepository.findAllMenu();
+	}
+	
+	@Transactional
+	public MenuDto findOneMenu(MenuDto menuDto) {
+		
+		MenuDto result = new MenuDto();
+		if(!menuDto.getMenuId().isEmpty() && menuDto.getMenuId() != "") {
+			result = menuRepository.findOneMenu(menuDto);
+		}
+		
+		return result;
 	}
 
 	@Transactional
 	public MenuDto addMenu(MenuDto menuDto) {
 		log.info("--- com.planE.menu.service.MenuService.addMenu() start ---");
 		
-		int result = menuRepository.addMenu(menuDto);
+		int result = 0;
 		MenuDto resultYn = new MenuDto();
 		
-		if(result == 1) {
-			resultYn.setResult(true);
-			log.info("--- com.planE.menu.service.MenuService.addMenu() end ---");
-		}else {
+		if( menuDto.getMenuNm() != null && menuDto.getMenuOdrg() != null) {
+			
+			result = menuRepository.addMenu(menuDto);
+			
+			if(result == 1) {
+				resultYn.setResult(true);
+				log.info("--- com.planE.menu.service.MenuService.addMenu() end ---");
+			}else {
+				resultYn.setResult(false);
+				log.info("--- com.planE.menu.service.MenuService.addMenu() insert failed ---");
+			}
+		} else {
 			resultYn.setResult(false);
 			log.info("--- com.planE.menu.service.MenuService.addMenu() insert failed ---");
+		}
+		
+
+		return resultYn;
+	}
+
+	@Transactional
+	public MenuDto editMenu(MenuDto menuDto) {
+		log.info("--- com.planE.menu.service.MenuService.editMenu() start ---");
+		
+		int result = 0;
+		MenuDto resultYn = new MenuDto();
+		
+		if(menuDto.getMenuId() != null && menuDto.getMenuId() != "") {
+			
+			result = menuRepository.editMenu(menuDto);
+			
+			if(result == 1) {
+				resultYn.setResult(true);
+				log.info("--- com.planE.menu.service.MenuService.editMenu() end ---");
+			} else {
+				resultYn.setResult(false);
+				log.info("--- com.planE.menu.service.MenuService.editMenu() update failed ---");
+			}
+		} else {
+			resultYn.setResult(false);
+			log.info("--- com.planE.menu.service.MenuService.editMenu() getMenuId failed ---");
+		}
+		
+		return resultYn;
+	}
+
+	@Transactional
+	public MenuDto removeMenu(MenuDto menuDto) {
+		log.info("--- com.planE.menu.service.MenuService.removeMenu() start ---");
+		
+		MenuDto resultYn = new MenuDto();
+		int result = 0;
+		
+		if(!menuDto.getMenuId().isEmpty() && menuDto.getMenuId() != null) {
+			
+			result = menuRepository.removeMenu(menuDto);
+			
+			if(result == 1) {
+				resultYn.setResult(true);
+				log.info("--- com.planE.menu.service.MenuService.removeMenu() end ---");
+			} else {
+				resultYn.setResult(false);
+				log.info("--- com.planE.menu.service.MenuService.removeMenu() delete failed ---");
+			}
+		} else {
+			resultYn.setResult(false);
+			log.info("--- com.planE.menu.service.MenuService.removeMenu() getMenuId failed ---");
 		}
 
 		return resultYn;
