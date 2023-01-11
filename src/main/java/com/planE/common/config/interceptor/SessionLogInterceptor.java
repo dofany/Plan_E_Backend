@@ -28,9 +28,10 @@ public class SessionLogInterceptor implements HandlerInterceptor {
         if (handler instanceof HandlerMethod) {
             //호출할 컨트롤러 메서드의 모든 정보가 포함되어 있다.
             HandlerMethod hm = (HandlerMethod) handler;
+            log.info("============================= Handler Method : {} =============================" , hm);
         }
 
-        log.info("============================= REQUEST  [{}] / [{}] / [{}] =============================", uuid, requestURI, handler);
+        log.info("============================= REQUEST : [{}] / [{}] / [{}] =============================", uuid, requestURI, handler);
         return true; //false면 다음 호출이 진행되지 않는다
 
     }
@@ -53,7 +54,7 @@ public class SessionLogInterceptor implements HandlerInterceptor {
         String logId = (String)request.getAttribute(LOG_ID);
         log.info("============================= RESPONSE : [{}] / [{}] =============================", logId, requestURI);
         if (ex != null) {
-            log.error("============================= afterCompletion error!! =============================", ex);
+            log.error("============================= AfterCompletion : {} =============================", ex);
         }
     }
 }
