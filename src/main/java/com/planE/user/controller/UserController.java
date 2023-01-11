@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @ApiOperation("사용자목록조회")
     @GetMapping("/user/userFind")
