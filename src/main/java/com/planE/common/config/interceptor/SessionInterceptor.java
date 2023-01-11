@@ -21,7 +21,7 @@ public class SessionInterceptor implements HandlerInterceptor {
 
 
         // 포스트맨 테스트 예외처리
-        if("postman-test".equals(request.getHeader("Postman"))) {
+        if("Y".equals(request.getHeader("testYn"))) {
             return true;
 
         } else {
