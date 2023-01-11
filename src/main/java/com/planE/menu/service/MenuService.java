@@ -68,7 +68,10 @@ public class MenuService {
 		int result = 0;
 		MenuDto resultYn = new MenuDto();
 		
-		if(menuDto.getMenuId() != null && menuDto.getMenuId() != "") {
+		resultYn = menuRepository.findOneMenu(menuDto);
+		String menuId = resultYn.getMenuId();
+		
+		if(!menuId.isEmpty() && menuId != null) {
 			
 			result = menuRepository.editMenu(menuDto);
 			
@@ -79,9 +82,10 @@ public class MenuService {
 				resultYn.setResult(false);
 				log.info("--- com.planE.menu.service.MenuService.editMenu() update failed ---");
 			}
+			
 		} else {
 			resultYn.setResult(false);
-			log.info("--- com.planE.menu.service.MenuService.editMenu() getMenuId failed ---");
+			log.info("--- com.planE.menu.service.MenuService.editMenu() MenuId not existed ---");
 		}
 		
 		return resultYn;
@@ -91,10 +95,13 @@ public class MenuService {
 	public MenuDto removeMenu(MenuDto menuDto) {
 		log.info("--- com.planE.menu.service.MenuService.removeMenu() start ---");
 		
-		MenuDto resultYn = new MenuDto();
 		int result = 0;
+		MenuDto resultYn = new MenuDto();
 		
-		if(!menuDto.getMenuId().isEmpty() && menuDto.getMenuId() != null) {
+		resultYn = menuRepository.findOneMenu(menuDto);
+		String menuId = resultYn.getMenuId();
+		
+		if(!menuId.isEmpty() && menuId != null) {
 			
 			result = menuRepository.removeMenu(menuDto);
 			
@@ -107,7 +114,7 @@ public class MenuService {
 			}
 		} else {
 			resultYn.setResult(false);
-			log.info("--- com.planE.menu.service.MenuService.removeMenu() getMenuId failed ---");
+			log.info("--- com.planE.menu.service.MenuService.removeMenu() MenuId not existed ---");
 		}
 
 		return resultYn;
