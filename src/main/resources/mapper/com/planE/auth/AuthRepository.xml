@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.planE.auth.repository.AuthRepository">
+
+	<!-- 권한전체조회 -->
+	<select id="findAllAuth" resultType="com.planE.auth.dto.AuthDto">
+		SELECT
+			  AUTH_ID
+			, SYS_CREAT_ID
+			, SYS_AMDR_ID
+			, SYS_SVC_ID
+			, SYS_RECD_CRET_DT
+			, SYS_RECD_CHG_DT
+			, AUTH_NM
+			, USE_YN
+		  FROM AUTH_BAS
+		  ORDER BY AUTH_ID DESC
+	</select>
+	
+	<!-- 권한상세조회 -->
+	<select id="findAuth" resultType="com.planE.auth.dto.AuthDto">
+		SELECT
+			  AUTH_ID
+			, SYS_CREAT_ID
+			, SYS_AMDR_ID
+			, SYS_SVC_ID
+			, SYS_RECD_CRET_DT
+			, SYS_RECD_CHG_DT
+			, AUTH_NM
+			, USE_YN
+		  FROM AUTH_BAS
+		 <where>
+		   <if test="authId != null and authId !=''">
+		   AND AUTH_ID = #{authId}
+		   </if>
+		   <if test="authNm != null and authNm != ''">
+		   AND AUTH_NM = #{authNm}
+		   </if>
+		   <if test="useYn != null and useYn != ''">
+		   AND USE_YN = #{useYn}
+		   </if>
+		 </where>
+		  ORDER BY AUTH_ID DESC
+	</select>
+	
+	<!-- 권한 추가 -->
+	<insert id="addAuth" parameterType="com.planE.auth.dto.AuthDto">
+		INSERT INTO AUTH_BAS 
+		(
+		  	  AUTH_ID
+			, SYS_CREAT_ID
+			, SYS_SVC_ID
+			, SYS_RECD_CRET_DT
+			, AUTH_NM
+			, USE_YN
+		)
+		VALUES
+		(
+			  #{authId}
+			, 'SYSTEM'
+			, 'SYSTEM'
+			, NOW()
+			, #{authNm}
+			, #{useYn}
+		)
+	</insert>
+	
+	<!-- 권한 수정 -->
+	<update id="modifyAuth" parameterType="com.planE.auth.dto.AuthDto">
+		UPDATE AUTH_BAS
+	 	   SET SYS_AMDR_ID = 'SYSTEM'
+	         , SYS_RECD_CHG_DT = NOW()
+	         <if test="authNm != null and authNm != ''">
+	         , AUTH_NM = #{authNm}
+	         </if>
+	         <if test="useYn != null and useYn !=''">
+	         , USE_YN = #{useYn}
+	         </if>
+		 WHERE AUTH_ID = #{authId}
+	</update>
+
+	<!-- 권한 삭제 -->
+	<delete id="removeAuth" parameterType="com.planE.auth.dto.AuthDto">
+		DELETE FROM AUTH_BAS
+	 	 WHERE AUTH_ID = #{authId}
+	</delete>
+
+</mapper>
