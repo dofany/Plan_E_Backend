@@ -2,7 +2,7 @@ server:
   port: 8080
   servlet:
     session:
-      timeout: 65
+      timeout: 1800 # 세션 만료 1800초(30분)
 
 property:
   api:

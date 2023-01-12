@@ -110,14 +110,20 @@ public class UserAthnService {
 
 		UserAthnDto result = new UserAthnDto();
 		String userId = "";
+		String email = "";
+		String userPw = "";
 
 
 		// 사용자 계정 존재
 		if (userInfo.size() > 0) {
         	log.info("--- com.planE.user.service.UserAthnService.login()_UserExistent OK ---");
 			userId = userInfo.get(0).getUserId();
+			email = userInfo.get(0).getEmail();
+			userPw = userInfo.get(0).getUserPw();
 
 			result.setUserId(userId);
+			result.setEmail(email);
+			result.setUserPw(userPw);
         } else {
         	log.info("--- com.planE.user.service.UserAthnService.login()_UserExistent NOT OK ---");
 

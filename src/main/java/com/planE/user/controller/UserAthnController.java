@@ -1,5 +1,8 @@
 package com.planE.user.controller;
 
+import com.planE.common.config.interceptor.SessionConst;
+import com.planE.common.session.controller.SessionController;
+import com.planE.user.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +17,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Date;
+
 @Api("사용자 인증")
 @RestController  //ResponseBody가 없어도 json값 전송 가능
 @RequestMapping("${property.api.end-point}")
@@ -23,14 +30,25 @@ public class UserAthnController {
 	@Autowired
 	UserAthnService userAthnService;
 
+	@Autowired
+	SessionController sessionController;
+
 	@ApiOperation("사용자 로그인 인증")
 	@PostMapping("/userAthn/login")
-	public UserAthnDto login(@RequestBody UserAthnDto userAthnDto) {
+	public UserAthnDto login(@RequestBody UserAthnDto userAthnDto, HttpServletRequest request) {
 		log.info("--- com.planE.user.controller.UserAthnController.login() start ---");
 		log.info("userId :: {}, userPw :: {}", userAthnDto.getEmail(), userAthnDto.getUserPw());
 
 
 		UserAthnDto result = userAthnService.login(userAthnDto);
+
+		// SessionLogin API 호출
+		if(userAthnDto.getEmail().equals(result.getEmail()) && userAthnDto.getUserPw().equals(result.getUserPw())) {
+			UserDto userDto = new UserDto();
+			userDto.setEmail(result.getEmail());
+			sessionController.login(userDto , request);
+		}
+
 		log.info("--- com.planE.user.controller.UserAthnController.login() end ---");
 
 		return result;
