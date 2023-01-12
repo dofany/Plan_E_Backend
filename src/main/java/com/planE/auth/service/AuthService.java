@@ -51,8 +51,7 @@ public class AuthService {
 		String str = "";
 		
 		//모든 파라미터 존재여부 확인
-		if(authDto.getAuthId() == null || authDto.getAuthId().isBlank() 
-				|| authDto.getAuthNm() == null || authDto.getAuthNm().isBlank()
+		if(authDto.getAuthNm() == null || authDto.getAuthNm().isBlank()
 				|| authDto.getUseYn() == null || authDto.getUseYn().isBlank()) {
 			//파라미터가 없는 경우
 			log.info("Fail Add Authority - Parameter Undefined");

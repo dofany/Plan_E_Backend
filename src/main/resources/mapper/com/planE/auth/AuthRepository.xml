@@ -56,7 +56,7 @@
 		)
 		VALUES
 		(
-			  #{authId}
+			  CONCAT('AUTH_', LPAD(GET_SEQ('SEQ_AUTH_ID'),10,'0'))
 			, 'SYSTEM'
 			, 'SYSTEM'
 			, NOW()
