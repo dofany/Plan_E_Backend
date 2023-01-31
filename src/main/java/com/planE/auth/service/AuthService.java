@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.planE.auth.dto.AuthDto;
+import com.planE.auth.dto.UserAuthDto;
 import com.planE.auth.repository.AuthRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -148,7 +149,63 @@ public class AuthService {
 		}
 		
 		return str;
-
+	}
+	
+	//사용자권한 조회
+	@Transactional
+	public List<UserAuthDto> findUserAuth(UserAuthDto userAuthDto) {
+		log.info("--- com.planE.auth.service.authService.findAuth() start ---");
+		List<UserAuthDto> result = authRepository.findUserAuth(userAuthDto);
+		log.info("--- com.planE.auth.service.authService.findAuth() end ---");
+		
+		return result;
+	}
+	
+	//사용자권한 추가
+	@Transactional
+	public Boolean addUserAuth(UserAuthDto userAuthDto) {
+		log.info("--- com.planE.auth.service.authService.addUserAuth() start ---");
+		
+		UserAuthDto UserAuthDto = new UserAuthDto();
+		UserAuthDto.setAuthId(UserAuthDto.getAuthId());
+		UserAuthDto.setUserId(UserAuthDto.getUserId());  
+        
+		authRepository.addUserAuth(userAuthDto);
+		
+		log.info("--- com.planE.auth.service.authService.addUserAuth() end ---");
+		
+		return true;
+	}
+	
+	//사용자권한 수정
+	@Transactional
+	public Boolean modifyUserAuth(UserAuthDto userAuthDto) {
+		log.info("--- com.planE.auth.service.authService.userAuthUpdate() start ---");
+		
+		UserAuthDto UserAuthDto = new UserAuthDto();
+		UserAuthDto.setAuthId(UserAuthDto.getAuthId());
+		UserAuthDto.setUserId(UserAuthDto.getUserId());  
+        
+		authRepository.modifyUserAuth(userAuthDto);
+		
+		log.info("--- com.planE.auth.service.authService.userAuthUpdate() end ---");
+		
+		return true;
+	}
+	
+	//사용자권한 삭제
+	@Transactional
+	public Boolean removeUserAuth(UserAuthDto userAuthDto) {
+		log.info("--- com.planE.auth.service.authService.userAuthDelete() start ---");
+		
+		UserAuthDto UserAuthDto = new UserAuthDto();
+		UserAuthDto.setUserId(UserAuthDto.getUserId());  
+        
+		authRepository.removeUserAuth(userAuthDto);
+		
+		log.info("--- com.planE.auth.service.authService.userAuthDelete() end ---");
+		
+		return true;
 	}
 
 }

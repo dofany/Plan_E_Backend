@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.planE.auth.dto.AuthDto;
+import com.planE.auth.dto.UserAuthDto;
 
 @Mapper
 public interface AuthRepository {
@@ -18,5 +19,13 @@ public interface AuthRepository {
 	void modifyAuth(AuthDto authDto);
 
 	void removeAuth(String authId);
+	
+	List<UserAuthDto> findUserAuth(UserAuthDto userAuthDto);
+	
+	void addUserAuth(UserAuthDto userAuthDto);
+	
+	void modifyUserAuth(UserAuthDto userAuthDto);
+	
+	void removeUserAuth(UserAuthDto userAuthDto);
 
 }

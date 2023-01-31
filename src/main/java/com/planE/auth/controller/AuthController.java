@@ -5,15 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.planE.auth.dto.AuthDto;
+import com.planE.auth.dto.UserAuthDto;
 import com.planE.auth.service.AuthService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.extern.slf4j.Slf4j;
 
 @Api("권한")
@@ -98,4 +99,43 @@ public class AuthController {
 		
 		return result;
 	}
+	
+	@ApiOperation("사용자권한 조회")
+    @GetMapping("/auth/findUserAuth")
+	public List<UserAuthDto> findUserAuth(@RequestBody UserAuthDto userAuthDto) {
+		log.info("--- com.planE.auth.controller.authController.findUserAuth() start ---");
+		List<UserAuthDto> result = authService.findUserAuth(userAuthDto);
+		log.info("--- com.planE.auth.controller.authController.findUserAuth() end ---");
+		return result;
+	}
+	
+	@ApiOperation("사용자권한 추가")
+    @PostMapping("/auth/addUserAuth")
+    public Boolean addUserAuth(@RequestBody UserAuthDto userAuthDto) {
+		log.info("--- com.planE.auth.controller.authController.addUserAuth() start ---");
+        log.info(userAuthDto.toString());
+        Boolean result = authService.addUserAuth(userAuthDto);
+        log.info("--- com.planE.auth.controller.authController.addUserAuth() end ---");
+        return result;
+    }
+	
+	@ApiOperation("사용자권한 수정")
+    @PostMapping("/auth/modifyUserAuth")
+    public Boolean modifyUserAuth(@RequestBody UserAuthDto userAuthDto) {
+        log.info("--- com.planE.user.controller.UserController.modifyUserAuth() start ---");
+        log.info(userAuthDto.toString());
+        Boolean result = authService.modifyUserAuth(userAuthDto);
+        log.info("--- com.planE.user.controller.UserController.modifyUserAuth() end ---");
+        return result;
+    }
+	
+	@ApiOperation("사용자권한 삭제")
+    @PostMapping("/auth/removeUserAuth")
+    public Boolean removeUserAuth(@RequestBody UserAuthDto userAuthDto) {
+        log.info("--- com.planE.user.controller.UserController.removeUserAuth() start ---");
+        log.info(userAuthDto.toString());
+        Boolean result = authService.removeUserAuth(userAuthDto);
+        log.info("--- com.planE.user.controller.UserController.removeUserAuth() end ---");
+        return result;
+    }
 }

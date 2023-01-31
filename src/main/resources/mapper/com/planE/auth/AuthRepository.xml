@@ -84,5 +84,54 @@
 		DELETE FROM AUTH_BAS
 	 	 WHERE AUTH_ID = #{authId}
 	</delete>
+	
+	<!-- 사용자권한 조회 -->
+	<select id="findUserAuth" resultType="com.planE.auth.dto.UserAuthDto">
+		SELECT 
+			USER_AUTH_ID
+			, AUTH_ID
+			, USER_ID
+		FROM   USER_AUTH_BAS
+		WHERE  USER_ID = #{userId}
+	</select>
+
+	<!-- 사용자권한 추가 -->
+	<insert id="addUserAuth" parameterType="com.planE.auth.dto.UserAuthDto">
+		INSERT INTO USER_AUTH_BAS (
+			USER_AUTH_ID
+			, SYS_CREAT_ID
+			, SYS_AMDR_ID
+			, SYS_SVC_ID
+			, SYS_RECD_CRET_DT
+			, SYS_RECD_CHG_DT
+			, AUTH_ID
+			, USER_ID
+			) VALUES (
+			LPAD(GET_SEQ('SEQ_USER_AUTH_BAS_ID'),10,'0')
+			, 'SYSTEM'
+			, NULL
+			, 'SYSTEM'
+			, SYSDATE()
+			, NULL
+			, #{authId}
+			, #{userId}
+			)
+	</insert>
+	
+	<!-- 사용자권한 수정 -->
+	<update id="modifyUserAuth" parameterType="com.planE.auth.dto.UserAuthDto">
+		UPDATE USER_AUTH_BAS
+		SET    AUTH_ID = #{authId}
+		       , SYS_AMDR_ID = 'SYSTEM'
+		       , SYS_RECD_CHG_DT = SYSDATE()
+		WHERE  USER_ID = #{userId}
+	</update>
+	
+	<!-- 사용자권한 삭제 -->
+	<delete id="removeUserAuth" parameterType="com.planE.auth.dto.UserAuthDto">
+		DELETE 
+		FROM   USER_AUTH_BAS
+		WHERE  USER_ID = #{userId}
+	</delete>
 
 </mapper>
