@@ -2,7 +2,7 @@ package com.planE.common.session.controller;
 
 import static org.springframework.util.ObjectUtils.isEmpty;
 
-import com.planE.common.config.interceptor.SessionConst;
+import com.planE.common.config.filter.SessionConst;
 import com.planE.user.dto.UserDto;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;

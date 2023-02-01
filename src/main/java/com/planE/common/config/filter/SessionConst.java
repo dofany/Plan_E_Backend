@@ -1,4 +1,4 @@
-package com.planE.common.config.interceptor;
+package com.planE.common.config.filter;
 
 public class SessionConst {
     // 세션 생성시, 조회시, 삭제시에 세션 객체 안에 담긴 유저 설정

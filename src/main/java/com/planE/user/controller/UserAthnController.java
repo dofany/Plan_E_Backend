@@ -1,6 +1,5 @@
 package com.planE.user.controller;
 
-import com.planE.common.config.interceptor.SessionConst;
 import com.planE.common.session.controller.SessionController;
 import com.planE.user.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.Date;
 
 @Api("사용자 인증")
 @RestController  //ResponseBody가 없어도 json값 전송 가능
