@@ -27,10 +27,20 @@ public class MenuService {
 	public MenuDto findOneMenu(MenuDto menuDto) {
 		
 		MenuDto result = new MenuDto();
-		if(!menuDto.getMenuId().isEmpty() && menuDto.getMenuId() != "") {
-			result = menuRepository.findOneMenu(menuDto);
-		}
 		
+		// 조회 id 값이 없거나 , ""이 아니어야 하고 
+		if(menuDto.getMenuId().isBlank() || menuDto.getMenuId() == null) {
+			result.setResult(false);
+		} else {
+			
+			result = menuRepository.findOneMenu(menuDto);
+			
+			if(result.getMenuId().isBlank() || result.getMenuId() == null) {
+				result.setResult(false);
+			}else {
+				result.setResult(true);				
+			}
+		}
 		return result;
 	}
 
@@ -68,10 +78,10 @@ public class MenuService {
 		int result = 0;
 		MenuDto resultYn = new MenuDto();
 		
-		resultYn = menuRepository.findOneMenu(menuDto);
-		String menuId = resultYn.getMenuId();
-		
-		if(!menuId.isEmpty() && menuId != null) {
+		if(menuDto.getMenuId() == null || menuDto.getMenuId().isBlank()) {
+			resultYn.setResult(false);
+			log.info("--- com.planE.menu.service.MenuService.editMenu() update failed ---");
+		} else {
 			
 			result = menuRepository.editMenu(menuDto);
 			
@@ -82,12 +92,8 @@ public class MenuService {
 				resultYn.setResult(false);
 				log.info("--- com.planE.menu.service.MenuService.editMenu() update failed ---");
 			}
-			
-		} else {
-			resultYn.setResult(false);
-			log.info("--- com.planE.menu.service.MenuService.editMenu() MenuId not existed ---");
 		}
-		
+			
 		return resultYn;
 	}
 
@@ -98,10 +104,11 @@ public class MenuService {
 		int result = 0;
 		MenuDto resultYn = new MenuDto();
 		
-		resultYn = menuRepository.findOneMenu(menuDto);
-		String menuId = resultYn.getMenuId();
-		
-		if(!menuId.isEmpty() && menuId != null) {
+		if(menuDto.getMenuId().isBlank() || menuDto.getMenuId() == null) {
+			
+			resultYn.setResult(false);
+			log.info("--- com.planE.menu.service.MenuService.removeMenu() MenuId not existed ---");
+		} else {
 			
 			result = menuRepository.removeMenu(menuDto);
 			
@@ -112,9 +119,6 @@ public class MenuService {
 				resultYn.setResult(false);
 				log.info("--- com.planE.menu.service.MenuService.removeMenu() delete failed ---");
 			}
-		} else {
-			resultYn.setResult(false);
-			log.info("--- com.planE.menu.service.MenuService.removeMenu() MenuId not existed ---");
 		}
 
 		return resultYn;
