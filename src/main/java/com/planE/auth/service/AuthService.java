@@ -19,13 +19,14 @@ public class AuthService {
 	@Autowired
 	private AuthRepository authRepository;
 	
+	@Transactional
 	public List<AuthDto> findAllAuth() {
 		
-		log.info("--- com.planE.auth.service.authService.findAllAuth() start ---");
+		log.info("--- com.planE.auth.service.AuthService.findAllAuth() start ---");
 		
 		List<AuthDto> result = authRepository.findAllAuth();
 		
-		log.info("--- com.planE.auth.service.authService.findAllAuth() end ---");
+		log.info("--- com.planE.auth.service.AuthService.findAllAuth() end ---");
 		
 		return result;
 	}
@@ -34,11 +35,11 @@ public class AuthService {
 	@Transactional
 	public List<AuthDto> findAuth(AuthDto authDto) {
 		
-		log.info("--- com.planE.auth.service.authService.findAuth() start ---");
+		log.info("--- com.planE.auth.service.AuthService.findAuth() start ---");
 		
 		List<AuthDto> result = authRepository.findAuth(authDto);
 		
-		log.info("--- com.planE.auth.service.authService.findAuth() end ---");
+		log.info("--- com.planE.auth.service.AuthService.findAuth() end ---");
 		
 		return result;
 	}
@@ -47,14 +48,14 @@ public class AuthService {
 	@Transactional
 	public String addAuth(AuthDto authDto) {
 		
-		log.info("--- com.planE.auth.service.authService.addAuth() start ---");
+		log.info("--- com.planE.auth.service.AuthService.addAuth() start ---");
 		
 		String str = "";
 		
-		//모든 파라미터 존재여부 확인
+		//필수 파라미터 존재여부 확인
 		if(authDto.getAuthNm() == null || authDto.getAuthNm().isBlank()
 				|| authDto.getUseYn() == null || authDto.getUseYn().isBlank()) {
-			//파라미터가 없는 경우
+			//필수 파라미터가 없는 경우
 			log.info("Fail Add Authority - Parameter Undefined");
 			str = "N";
 			return str;	
@@ -73,7 +74,7 @@ public class AuthService {
             return str;
 		} finally {
 			
-			log.info("--- com.planE.auth.service.authService.addAuth() end ---");
+			log.info("--- com.planE.auth.service.AuthService.addAuth() end ---");
 		}
 		
 		return str;
@@ -82,13 +83,13 @@ public class AuthService {
 	@Transactional
 	public String modifyAuth(AuthDto authDto) {
 		
-		log.info("--- com.planE.auth.service.authService.modifyAuth() start ---");
+		log.info("--- com.planE.auth.service.AuthService.modifyAuth() start ---");
 		
 		String str = "";
 
 		//파라미터 authId 존재여부 확인
 		if(authDto.getAuthId() == null || authDto.getAuthId().isBlank()) {
-			//파라미터에 authId가 없는 경우
+			//필수 파라미터가 없는 경우
 			log.info("Fail ModifyAuth - AuthId to Modify Undefined");
 			str = "N";
 			return str;	
@@ -109,7 +110,7 @@ public class AuthService {
             
 		} finally {
 			
-			log.info("--- com.planE.auth.service.authService.modifyAuth() end ---");
+			log.info("--- com.planE.auth.service.AuthService.modifyAuth() end ---");
 		}
 		
 		return str;
@@ -118,11 +119,11 @@ public class AuthService {
 	@Transactional
 	public String removeAuth(AuthDto authDto) {
 		
-		log.info("--- com.planE.auth.service.authService.removeAuth() start ---");
+		log.info("--- com.planE.auth.service.AuthService.removeAuth() start ---");
 		
 		String str = "";
 
-		//파라미터 authId 존재여부 확인
+		//필수 파라미터 존재여부 확인
 		if(authDto.getAuthId() == null || authDto.getAuthId().isBlank()) {
 			//파라미터에 authId가 없는 경우
 			log.info("Fail Remove Authority - AuthId to Remove Undefined");
@@ -145,7 +146,7 @@ public class AuthService {
             
 		} finally {
 			
-			log.info("--- com.planE.auth.service.authService.removeAuth() end ---");
+			log.info("--- com.planE.auth.service.AuthService.removeAuth() end ---");
 		}
 		
 		return str;
@@ -164,7 +165,7 @@ public class AuthService {
 	//사용자권한 추가
 	@Transactional
 	public Boolean addUserAuth(UserAuthDto userAuthDto) {
-		log.info("--- com.planE.auth.service.authService.addUserAuth() start ---");
+		log.info("--- com.planE.auth.service.AuthService.addUserAuth() start ---");
 		
 		UserAuthDto UserAuthDto = new UserAuthDto();
 		UserAuthDto.setAuthId(UserAuthDto.getAuthId());
@@ -172,7 +173,7 @@ public class AuthService {
         
 		authRepository.addUserAuth(userAuthDto);
 		
-		log.info("--- com.planE.auth.service.authService.addUserAuth() end ---");
+		log.info("--- com.planE.auth.service.AuthService.addUserAuth() end ---");
 		
 		return true;
 	}
@@ -180,7 +181,7 @@ public class AuthService {
 	//사용자권한 수정
 	@Transactional
 	public Boolean modifyUserAuth(UserAuthDto userAuthDto) {
-		log.info("--- com.planE.auth.service.authService.userAuthUpdate() start ---");
+		log.info("--- com.planE.auth.service.AuthService.userAuthUpdate() start ---");
 		
 		UserAuthDto UserAuthDto = new UserAuthDto();
 		UserAuthDto.setAuthId(UserAuthDto.getAuthId());
@@ -188,7 +189,7 @@ public class AuthService {
         
 		authRepository.modifyUserAuth(userAuthDto);
 		
-		log.info("--- com.planE.auth.service.authService.userAuthUpdate() end ---");
+		log.info("--- com.planE.auth.service.AuthService.userAuthUpdate() end ---");
 		
 		return true;
 	}
@@ -196,14 +197,14 @@ public class AuthService {
 	//사용자권한 삭제
 	@Transactional
 	public Boolean removeUserAuth(UserAuthDto userAuthDto) {
-		log.info("--- com.planE.auth.service.authService.userAuthDelete() start ---");
+		log.info("--- com.planE.auth.service.AuthService.userAuthDelete() start ---");
 		
 		UserAuthDto UserAuthDto = new UserAuthDto();
 		UserAuthDto.setUserId(UserAuthDto.getUserId());  
         
 		authRepository.removeUserAuth(userAuthDto);
 		
-		log.info("--- com.planE.auth.service.authService.userAuthDelete() end ---");
+		log.info("--- com.planE.auth.service.AuthService.userAuthDelete() end ---");
 		
 		return true;
 	}

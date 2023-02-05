@@ -30,11 +30,11 @@ public class AuthController {
 	@GetMapping("/auth/findAllAuth")
 	public List<AuthDto> findAllAuth() {
 		
-		log.info("--- com.planE.auth.controller.authController.findAllAuth() start ---");
+		log.info("--- com.planE.auth.controller.AuthController.findAllAuth() start ---");
 		
 		List<AuthDto> result = authService.findAllAuth();
 		
-		log.info("--- com.planE.auth.controller.authController.findAllAuth() end ---");
+		log.info("--- com.planE.auth.controller.AuthController.findAllAuth() end ---");
 		
 		return result; 
 	}
@@ -43,11 +43,11 @@ public class AuthController {
 	@PostMapping("/auth/findAuth")
 	public List<AuthDto> findAuth(@RequestBody AuthDto authDto) {
 		
-		log.info("--- com.planE.auth.controller.authController.findAuth() start ---");
+		log.info("--- com.planE.auth.controller.AuthController.findAuth() start ---");
 		
 		List<AuthDto> result = authService.findAuth(authDto);
 		
-		log.info("--- com.planE.auth.controller.authController.findAuth() end ---");
+		log.info("--- com.planE.auth.controller.AuthController.findAuth() end ---");
 		
 		return result;
 	}
@@ -56,14 +56,14 @@ public class AuthController {
 	@PostMapping("/auth/addAuth")
 	public AuthDto addAuth(@RequestBody AuthDto authDto) {
 		
-		log.info("--- com.planE.auth.controller.authController.addAuth() start ---");
+		log.info("--- com.planE.auth.controller.AuthController.addAuth() start ---");
 		
 		String str = authService.addAuth(authDto);
 		
 		AuthDto result = new AuthDto();
 		result.setSucesYn(str);
 		
-		log.info("--- com.planE.auth.controller.authController.addAuth() end ---");
+		log.info("--- com.planE.auth.controller.AuthController.addAuth() end ---");
 		
 		return result;
 	}
@@ -72,14 +72,14 @@ public class AuthController {
 	@PostMapping("/auth/modifyAuth")
 	public AuthDto modifyAuth(@RequestBody AuthDto authDto) {
 		
-		log.info("--- com.planE.auth.controller.authController.modifyAuth() start ---");
+		log.info("--- com.planE.auth.controller.AuthController.modifyAuth() start ---");
 		
 		String str = authService.modifyAuth(authDto);
 		
 		AuthDto result = new AuthDto();
 		result.setSucesYn(str);
 		
-		log.info("--- com.planE.auth.controller.authController.modifyAuth() end ---");
+		log.info("--- com.planE.auth.controller.AuthController.modifyAuth() end ---");
 		
 		return result;
 	}
@@ -88,14 +88,14 @@ public class AuthController {
 	@PostMapping("/auth/removeAuth")
 	public AuthDto removeAuth(@RequestBody AuthDto authDto) {
 		
-		log.info("--- com.planE.auth.controller.authController.removeAuth() start ---");
+		log.info("--- com.planE.auth.controller.AuthController.removeAuth() start ---");
 		
 		String str = authService.removeAuth(authDto);
 		
 		AuthDto result = new AuthDto();
 		result.setSucesYn(str);
 		
-		log.info("--- com.planE.auth.controller.authController.removeAuth() end ---");
+		log.info("--- com.planE.auth.controller.AuthController.removeAuth() end ---");
 		
 		return result;
 	}
@@ -103,39 +103,39 @@ public class AuthController {
 	@ApiOperation("사용자권한 조회")
     @GetMapping("/auth/findUserAuth")
 	public List<UserAuthDto> findUserAuth(@RequestBody UserAuthDto userAuthDto) {
-		log.info("--- com.planE.auth.controller.authController.findUserAuth() start ---");
+		log.info("--- com.planE.auth.controller.AuthController.findUserAuth() start ---");
 		List<UserAuthDto> result = authService.findUserAuth(userAuthDto);
-		log.info("--- com.planE.auth.controller.authController.findUserAuth() end ---");
+		log.info("--- com.planE.auth.controller.AuthController.findUserAuth() end ---");
 		return result;
 	}
 	
 	@ApiOperation("사용자권한 추가")
     @PostMapping("/auth/addUserAuth")
     public Boolean addUserAuth(@RequestBody UserAuthDto userAuthDto) {
-		log.info("--- com.planE.auth.controller.authController.addUserAuth() start ---");
+		log.info("--- com.planE.auth.controller.AuthController.addUserAuth() start ---");
         log.info(userAuthDto.toString());
         Boolean result = authService.addUserAuth(userAuthDto);
-        log.info("--- com.planE.auth.controller.authController.addUserAuth() end ---");
+        log.info("--- com.planE.auth.controller.AuthController.addUserAuth() end ---");
         return result;
     }
 	
 	@ApiOperation("사용자권한 수정")
     @PostMapping("/auth/modifyUserAuth")
     public Boolean modifyUserAuth(@RequestBody UserAuthDto userAuthDto) {
-        log.info("--- com.planE.user.controller.UserController.modifyUserAuth() start ---");
+        log.info("--- com.planE.user.controller.AuthController.modifyUserAuth() start ---");
         log.info(userAuthDto.toString());
         Boolean result = authService.modifyUserAuth(userAuthDto);
-        log.info("--- com.planE.user.controller.UserController.modifyUserAuth() end ---");
+        log.info("--- com.planE.user.controller.AuthController.modifyUserAuth() end ---");
         return result;
     }
 	
 	@ApiOperation("사용자권한 삭제")
     @PostMapping("/auth/removeUserAuth")
     public Boolean removeUserAuth(@RequestBody UserAuthDto userAuthDto) {
-        log.info("--- com.planE.user.controller.UserController.removeUserAuth() start ---");
+        log.info("--- com.planE.user.controller.AuthController.removeUserAuth() start ---");
         log.info(userAuthDto.toString());
         Boolean result = authService.removeUserAuth(userAuthDto);
-        log.info("--- com.planE.user.controller.UserController.removeUserAuth() end ---");
+        log.info("--- com.planE.user.controller.AuthController.removeUserAuth() end ---");
         return result;
     }
 }

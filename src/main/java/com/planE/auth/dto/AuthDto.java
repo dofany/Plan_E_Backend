@@ -1,12 +1,15 @@
 package com.planE.auth.dto;
 
+import java.io.Serializable;
+
 import com.planE.common.base.dto.BaseDto;
+
+import io.swagger.annotations.ApiParam;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 
 @Getter
@@ -14,11 +17,17 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthDto extends BaseDto {
+public class AuthDto extends BaseDto implements Serializable {
 
-	private String authId; /** 권한아이디*/
-	private String authNm; /** 권한이름*/
-	private String useYn; /** 사용여부*/
+	private static final long serialVersionUID = 7542547719780442399L;
 	
-    private String sucesYn; /** 성공여부*/
+	@ApiParam("권한아이디")
+	private String authId;
+	@ApiParam("권한이름")
+	private String authNm;
+	@ApiParam("사용여부")
+	private String useYn;
+	
+	@ApiParam("성공여부")
+    private String sucesYn;
 }

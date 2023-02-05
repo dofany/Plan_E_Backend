@@ -18,7 +18,7 @@
 	</select>
 	
 	<!-- 권한상세조회 -->
-	<select id="findAuth" resultType="com.planE.auth.dto.AuthDto">
+	<select id="findAuth" resultType="com.planE.auth.dto.AuthDto" parameterType="com.planE.auth.dto.AuthDto">
 		SELECT
 			  AUTH_ID
 			, SYS_CREAT_ID
