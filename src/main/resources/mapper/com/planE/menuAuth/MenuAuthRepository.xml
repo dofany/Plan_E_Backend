@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.planE.menuAuth.repository.MenuAuthRepository">
+
+
+    <!-- 메뉴 권한 조회 -->
+    <select id="findAllMenuAuth" parameterType="com.planE.menuAuth.dto.MenuAuthDto"
+                                    resultType="com.planE.menuAuth.dto.MenuAuthDto">
+        SELECT
+            a.MENU_AUTH_ID,
+            a.SYS_CREAT_ID,
+            a.SYS_SVC_ID,
+            a.SYS_RECD_CRET_DT,
+            a.SYS_RECD_CHG_DT,
+            a.AUTH_ID,
+            a.MENU_ID,
+            b.MENU_NM,
+            b.USE_YN
+        FROM MENU_AUTH_BAS a inner join MENU_BAS b
+            ON a.MENU_ID  = b.MENU_ID
+        <where>
+            b.USE_YN = 'Y'
+            AND a.AUTH_ID = #{authId}
+            AND b.MENU_UP_ID IS NULL
+        </where>
+        ORDER BY a.MENU_AUTH_ID
+    </select>
+
+    <!-- 메뉴 권한 조회 (중복제거) -->
+    <select id="menuDuplicationCheck" parameterType="com.planE.menuAuth.dto.MenuAuthDto"
+                                 resultType="com.planE.menuAuth.dto.MenuAuthDto">
+        SELECT
+            a.MENU_ID,
+            a.SYS_CREAT_ID,
+            a.SYS_SVC_ID,
+            a.SYS_RECD_CRET_DT,
+            a.SYS_RECD_CHG_DT,
+            a.MENU_NM,
+            a.MENU_ODRG,
+            a.MENU_UP_ID,
+            a.USE_YN
+        FROM MENU_BAS a
+        <where>
+            USE_YN = 'Y'
+            AND MENU_UP_ID IS NULL
+            AND MENU_ID NOT IN (SELECT b.MENU_ID
+                                FROM MENU_AUTH_BAS b
+                                WHERE b.AUTH_ID = #{authId}
+                                )
+        </where>
+        ORDER BY a.MENU_ID
+    </select>
+
+    <!-- 메뉴 권한 추가 -->
+    <insert id="addMenuAuth" parameterType="com.planE.menuAuth.dto.MenuAuthDto">
+        INSERT INTO MENU_AUTH_BAS
+        (
+            MENU_AUTH_ID,
+            SYS_CREAT_ID,
+            SYS_SVC_ID,
+            SYS_RECD_CRET_DT,
+            AUTH_ID,
+            MENU_ID
+        )
+        VALUES
+        (
+            LPAD(GET_SEQ('SEQ_MENU_AUTH_BAS_ID'),10,'0'),
+            'SYSTEM',
+            'SYSTEM',
+            NOW(),
+            #{authId},
+            #{menuId}
+        )
+    </insert>
+
+	<!-- 메뉴 권한 삭제 -->
+	<delete id="removeMenuAuth" parameterType="string">
+		DELETE FROM MENU_AUTH_BAS
+	 	WHERE MENU_ID = #{menuId}
+            AND AUTH_ID = #{authId}
+	</delete>
+
+</mapper>
