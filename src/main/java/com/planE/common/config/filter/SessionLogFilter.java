@@ -27,6 +27,7 @@ public class SessionLogFilter implements Filter {
             log.info("============================= REQUEST : [{}] / [{}] =============================", uuid, requestURI);
             chain.doFilter(request, response);
         } catch (Exception e) {
+            log.error("============================= 인증 체크 필터 에러 : {} =============================", e.getMessage());
             throw new RuntimeException(e);
         } finally {
             log.info("============================= RESPONSE : [{}] / [{}] =============================", uuid, requestURI);

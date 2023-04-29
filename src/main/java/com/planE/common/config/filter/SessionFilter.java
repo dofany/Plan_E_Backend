@@ -65,6 +65,7 @@ public class SessionFilter implements Filter {
             chain.doFilter(request, response);
 
         } catch (Exception e) {
+            log.error("============================= 인증 체크 필터 에러 : {} =============================", e.getMessage());
             throw e;
         } finally {
             log.info("============================= 인증 체크 필터 종료 : {} =============================", requestURI);

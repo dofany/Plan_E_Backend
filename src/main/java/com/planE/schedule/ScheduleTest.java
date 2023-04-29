@@ -43,7 +43,7 @@ public class ScheduleTest {
      * 초(0-59) 분(0-59) 시간(0-23) 일(1-31) 월(1-12) 요일(0-7)
      *
      */
-    @Scheduled(cron = "*/30 * * * * *")
+    //@Scheduled(cron = "*/30 * * * * *")
     public void scheduleTaskUsingCronExpression() {
         long now = System.currentTimeMillis() / 1000;
         log.info("----- 30초 마다 실행되는 배치 예시입니다.-----");

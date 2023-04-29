@@ -3,6 +3,7 @@ package com.planE.user.controller;
 import com.planE.common.session.controller.SessionController;
 import com.planE.user.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,9 @@ public class UserAthnController {
 	@Autowired
 	SessionController sessionController;
 
+	@Autowired
+	PasswordEncoder passwordEncoder;
+
 	@ApiOperation("사용자 로그인 인증")
 	@PostMapping("/userAthn/login")
 	public UserAthnDto login(@RequestBody UserAthnDto userAthnDto, HttpServletRequest request) {
@@ -40,7 +44,7 @@ public class UserAthnController {
 		UserAthnDto result = userAthnService.login(userAthnDto);
 
 		// SessionLogin API 호출
-		if(userAthnDto.getEmail().equals(result.getEmail()) && userAthnDto.getUserPw().equals(result.getUserPw())) {
+		if(userAthnDto.getEmail().equals(result.getEmail()) && passwordEncoder.matches(userAthnDto.getUserPw(),result.getUserPw())) {
 			UserDto userDto = new UserDto();
 			userDto.setEmail(result.getEmail());
 			sessionController.login(userDto , request);

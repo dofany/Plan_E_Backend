@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +34,9 @@ public class UserAthnService {
     
     @Autowired
     UserRepository userRepository;
+
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
     @Transactional
     public UserAthnDto signUp(UserAthnDto userAthnDto) {
@@ -163,7 +167,7 @@ public class UserAthnService {
         
         // 사용자 패스워드 일치 여부 확인 
         String userPwd = userAthnDto.getUserPw();
-        if(userInfo.get(0).getUserPw().equals(userPwd)) {
+        if(passwordEncoder.matches(userPwd,userInfo.get(0).getUserPw())) {
         	log.info("--- com.planE.user.service.UserAthnService.login()_UserPwd OK ---");
         } else {
         	log.info("--- com.planE.user.service.UserAthnService.login()_UserPwd NOT OK ---");
@@ -232,7 +236,7 @@ public class UserAthnService {
 					
 					UserDto userDto = new UserDto();
 					userDto.setEmail(userEmail);
-					userDto.setUserPw(newPw);
+					userDto.setUserPw(passwordEncoder.encode(newPw));
 					userDto.setSysAmdrId("SYSTEM");
 					userDto.setSysSvcId("UserAthnService");
 
@@ -325,7 +329,7 @@ public class UserAthnService {
 			// 2. 사용자 생성
 			UserDto	userDto = new UserDto();
 			userDto.setUserNm(userNm);
-			userDto.setUserPw(userPw);
+			userDto.setUserPw(passwordEncoder.encode(userPw));
 			userDto.setEmail(email);
 			userService.addUser(userDto);
 			log.info("Success Insert SignUp User");
