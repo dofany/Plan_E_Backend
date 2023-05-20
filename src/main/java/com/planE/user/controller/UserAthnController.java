@@ -47,6 +47,7 @@ public class UserAthnController {
 		if(userAthnDto.getEmail().equals(result.getEmail()) && passwordEncoder.matches(userAthnDto.getUserPw(),result.getUserPw())) {
 			UserDto userDto = new UserDto();
 			userDto.setEmail(result.getEmail());
+			userDto.setUserId(result.getUserId());
 			sessionController.login(userDto , request);
 		}
 

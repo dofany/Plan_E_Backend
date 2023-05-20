@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.planE.calendar.repository.CalendarRepository">
+    <!-- 캘린더 목록조회 -->
+    <select id="findAll" resultType="com.planE.calendar.dto.CalendarDto" parameterType="com.planE.calendar.dto.CalendarDto">
+        SELECT *
+        FROM
+            CALENDAR_BAS
+        WHERE
+            USER_ID = #{userId}
+        ORDER BY SYS_CREAT_ID DESC
+    </select>
+
+    <!-- 캘린더 생성 -->
+    <insert id="add" parameterType="com.planE.calendar.dto.CalendarDto">
+        INSERT INTO CALENDAR_BAS(
+            CALENDAR_ID,
+            USER_ID
+            ,CALENDAR_NAME
+            ,CALENDAR_CONTENT
+            ,SYS_CREAT_ID
+            ,SYS_AMDR_ID
+            ,SYS_SVC_ID
+            ,SYS_RECD_CRET_DT
+            ,SYS_RECD_CHG_DT
+        ) VALUES(
+            concat('CALENDAR_', LPAD(GET_SEQ('SEQ_CALENDAR_ID'),10,'0'))
+            ,#{userId}
+            ,#{calendarName}
+            ,#{calendarContent}
+            ,#{userId}
+            ,#{userId}
+            ,'CalendarService'
+            ,NOW()
+            ,NOW()
+        )
+    </insert>
+
+    <update id="edit" parameterType="com.planE.calendar.dto.CalendarDto">
+        UPDATE CALENDAR_BAS
+        <set>
+            CALENDAR_NAME = #{calendarName}
+           ,CALENDAR_CONTENT = #{calendarContent}
+        </set>
+        <where>
+            CALENDAR_ID = #{calendarId}
+        </where>
+    </update>
+
+    <delete id="delete" parameterType="com.planE.calendar.dto.CalendarDto">
+        DELETE FROM CALENDAR_BAS
+        <where>
+            CALENDAR_ID = #{calendarId}
+        </where>
+    </delete>
+</mapper>

@@ -2,6 +2,8 @@ package com.planE.user.service;
 
 import java.util.List;
 
+import com.planE.calendar.dto.CalendarDto;
+import com.planE.calendar.repository.CalendarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,9 @@ import lombok.extern.slf4j.Slf4j;
 public class UserService {
     @Autowired
     public UserRepository userRepository;
+
+    @Autowired
+    public CalendarRepository calendarRepository;
 
     public List<UserDto> userFind(String email) {
     	
@@ -33,7 +38,16 @@ public class UserService {
           UserDto.setUserNm(UserDto.getUserNm());
           
           userRepository.insertAddUser(userDto);
-          
+
+          // 기본 캘린더 생성
+          List<UserDto> userSearch = userRepository.userFind(userDto.getEmail());
+          String userId = userSearch.get(0).getUserId();
+          CalendarDto calendarDto = new CalendarDto();
+          calendarDto.setUserId(userId);
+          calendarDto.setCalendarName("기본 캘린더");
+          calendarDto.setCalendarContent("기본 캘린더");
+
+          calendarRepository.add(calendarDto);
           log.info("--- com.planE.user.service.UserService.AddUser() end ---");
   		
           return true;

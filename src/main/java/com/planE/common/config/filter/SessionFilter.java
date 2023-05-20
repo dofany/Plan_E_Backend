@@ -55,7 +55,8 @@ public class SessionFilter implements Filter {
                     return;
                 } else {
                     log.info("============================= JSESSIONID  : {} =============================", session.getId());
-                    log.info("============================= 세션 정보 : {} =============================", session.getAttribute(SessionConst.SESSION_USER_EMAIL));
+                    log.info("============================= 세션 Email 정보 : {} =============================", session.getAttribute(SessionConst.SESSION_USER_EMAIL));
+                    log.info("============================= 세션 USERID정보 : {} =============================", session.getAttribute(SessionConst.SESSION_USER_ID));
                     log.info("============================= 세션 생성 날짜 : {} =============================", new Date(session.getCreationTime()));
                     log.info("============================= 세션 유효 시간 : {}분 =============================", session.getMaxInactiveInterval() / 60);
                     log.info("============================= 최근 세션 접근 시간 : {} =============================", new Date(session.getLastAccessedTime()));
