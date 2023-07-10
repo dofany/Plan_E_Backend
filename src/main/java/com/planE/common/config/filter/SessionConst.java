@@ -5,4 +5,5 @@ public class SessionConst {
     // 우선적으로는 이메일만 넣어줌 => 추후 다른 정보가 필요할시 추가하면 됨
     public static final String SESSION_USER_EMAIL = "sessionInfoEmail";
     public static final String SESSION_USER_ID = "sessionInfoUserId";
+    public static final String SESSION_BASE_CALENDAR_ID = "sessionInfoCalendarId";
 }

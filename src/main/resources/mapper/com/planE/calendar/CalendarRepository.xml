@@ -9,6 +9,9 @@
             CALENDAR_BAS
         WHERE
             USER_ID = #{userId}
+        <if test="calendarName != null and calendarName != ''">
+            AND CALENDAR_NAME = #{calendarName}
+        </if>
         ORDER BY SYS_CREAT_ID DESC
     </select>
 

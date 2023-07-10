@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.planE.calendarContent.repository.CalendarContentRepository">
+    <select id="findAll" parameterType="com.planE.calendarContent.dto.CalendarContentDto" resultType="com.planE.calendarContent.dto.CalendarContentDto">
+        SELECT *
+        FROM
+        CALENDAR_CONTENT_BAS
+        WHERE
+        CALENDAR_ID = #{calendarId}
+        AND USER_ID = #{userId}
+    </select>
+
+    <select id="findOne" parameterType="com.planE.calendarContent.dto.CalendarContentDto" resultType="com.planE.calendarContent.dto.CalendarContentDto">
+        SELECT *
+        FROM
+        CALENDAR_CONTENT_BAS
+        WHERE
+        USER_ID = #{userId}
+        AND CALENDAR_CONTENT_ID = #{calendarContentId}
+    </select>
+
+    <insert id="add" parameterType="com.planE.calendarContent.dto.CalendarContentDto">
+        INSERT INTO CALENDAR_CONTENT_BAS (
+        CALENDAR_CONTENT_ID ,
+        CALENDAR_ID ,
+        USER_ID ,
+        TITLE ,
+        DETAIL_CONTENT ,
+        START_DT ,
+        END_DT ,
+        START_TIME,
+        END_TIME,
+        ALARM_YN ,
+        ALARM_TIME ,
+        SYS_CREAT_ID ,
+        SYS_SVC_ID ,
+        SYS_RECD_CRET_DT
+        ) VALUES (
+        concat('CALENDARCONTENT_', LPAD(GET_SEQ('SEQ_CALENDAR_CONTENT_ID'),10,'0')),
+        #{calendarId},
+        #{userId},
+        #{title},
+        #{detailContent},
+        #{startDt},
+        #{endDt},
+        #{startTime},
+        #{endTime},
+        #{alarmYn},
+        #{alarmTime},
+        #{sysCreatId},
+        #{sysSvcId},
+        now()
+        )
+    </insert>
+
+    <delete id="delete" parameterType="com.planE.calendarContent.dto.CalendarContentDto">
+        DELETE
+        FROM CALENDAR_CONTENT_BAS
+        WHERE
+        CALENDAR_ID = #{calendarId}
+        AND CALENDAR_CONTENT_ID = #{calendarContentId}
+        AND USER_ID = #{userId}
+    </delete>
+
+    <update id="update" parameterType="com.planE.calendarContent.dto.CalendarContentDto">
+        UPDATE
+        CALENDAR_CONTENT_BAS
+        SET
+        TITLE = #{title},
+        DETAIL_CONTENT = #{detailContent},
+        START_DT = #{startDt},
+        END_DT = #{endDt},
+        START_TIME = #{startTime},
+        END_TIME = #{endTime},
+        ALARM_YN = #{alarmYn},
+        ALARM_TIME = #{alarmTime},
+        SYS_AMDR_ID = #{sysAmdrId},
+        SYS_RECD_CHG_DT = NOW()
+        WHERE
+        CALENDAR_ID = #{calendarId}
+        AND CALENDAR_CONTENT_ID = #{calendarContentId}
+        AND USER_ID = #{userId}
+    </update>
+</mapper>
